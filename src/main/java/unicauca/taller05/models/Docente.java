@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Docente extends Persona {
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name="oficina_id")
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinColumn(name = "oficina_id")
     private Oficina oficina;
 
     @ManyToMany(mappedBy = "docentes", fetch = FetchType.EAGER)

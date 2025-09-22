@@ -18,19 +18,22 @@ public class Curso {
     @Column(length=255)
     private String nombre;
 
-    @ManyToOne
-    @JoinColumn(name="asignatura_id")
+    // EAGER 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "asignatura_id")
     private Asignatura asignatura;
 
-    @ManyToMany
+    //EAGER
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "curso_docente",
-            joinColumns = @JoinColumn(name = "curso_id"),
-            inverseJoinColumns = @JoinColumn(name = "docente_id")
+        name = "curso_docente",
+        joinColumns = @JoinColumn(name = "curso_id"),
+        inverseJoinColumns = @JoinColumn(name = "docente_id")
     )
     private List<Docente> docentes;
 
-    @OneToMany(mappedBy = "curso", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    //EAGER
+    @OneToMany(mappedBy = "curso", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<FranjaHorario> franjas;
 
 }
