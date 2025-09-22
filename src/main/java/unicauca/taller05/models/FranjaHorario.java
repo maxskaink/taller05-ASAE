@@ -25,7 +25,7 @@ public class FranjaHorario {
     @JoinColumn(name = "curso_id")
     private Curso curso;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "espacio_fisico_id")
     private EspacioFisico espacioFisico;
 
