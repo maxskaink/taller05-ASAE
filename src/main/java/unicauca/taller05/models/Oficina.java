@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 // Oficina.java
 @Entity
 @Data
@@ -21,5 +23,8 @@ public class Oficina {
 
     @Column(length=20)
     private String ubicacion;
+
+    @OneToMany(mappedBy = "oficina")
+    private List<Docente> docentes;
 
 }

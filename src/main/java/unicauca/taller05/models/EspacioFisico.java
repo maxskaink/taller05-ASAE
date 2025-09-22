@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,6 +18,9 @@ public class EspacioFisico {
 
     @Column(unique=true, length=255)
     private String nombre;
+
+    @OneToMany(mappedBy = "espacioFisico")
+    private List<FranjaHorario> franjaHorarios;
 
     private Integer capacidad;
 }
