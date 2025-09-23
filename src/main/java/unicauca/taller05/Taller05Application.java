@@ -248,39 +248,132 @@ public class Taller05Application implements CommandLineRunner {
 
         // 1. Verificar datos cargados inicialmente
         System.out.println("1. Verificando datos iniciales cargados...");
-        System.out.println("Total de cursos: " + cursoRepository.count());
-        System.out.println("Total de docentes: " + docenteRepository.count());
-        System.out.println("Total de franjas horarias: " + franjaHorarioRepository.count());
+        System.out.println("   Total de cursos: " + cursoRepository.count());
+        System.out.println("   Total de docentes: " + docenteRepository.count());
+        System.out.println("   Total de franjas horarias: " + franjaHorarioRepository.count());
+        System.out.println("   Total de asignaturas: " + asignaturaRepository.count());
+        System.out.println("   Total de espacios físicos: " + espacioFisicoRepository.count());
 
-        // 2. Probar método crearFranjaHoraria con datos existentes
-        System.out.println("\n2. Probando método crearFranjaHoraria...");
-        FranjaHorario nuevaFranja = crearFranjaHoraria(
+        // 2. Probar método crearDocenteConPersonaYOficina
+        System.out.println("\n2. Probando método crearDocenteConPersonaYOficina...");
+        Docente nuevoDocente = crearDocenteConPersonaYOficina(
+                "Roberto", 
+                "Fernández", 
+                "roberto.fernandez@unicauca.edu.co",
+                "Oficina F-205", 
+                "Bloque F - Segundo Piso"
+        );
+        System.out.println("   ✓ Nuevo docente creado: " + nuevoDocente.getNombre() + " " + nuevoDocente.getApellido());
+        System.out.println("   ✓ Oficina asignada: " + nuevoDocente.getOficina().getNombre());
+
+        // 3. Probar método crearCurso con el nuevo docente y docentes existentes
+        System.out.println("\n3. Probando método crearCurso...");
+        
+        // Crear curso solo con el nuevo docente
+        Curso nuevoCurso1 = crearCurso(
+                "Sistemas Distribuidos - Grupo Avanzado", 
+                5, // ID de Sistemas Distribuidos
+                new int[]{nuevoDocente.getId()}
+        );
+        System.out.println("   ✓ Curso creado: " + nuevoCurso1.getNombre());
+        
+        // Crear curso con múltiples docentes (nuevo docente + docentes existentes)
+        Curso nuevoCurso2 = crearCurso(
+                "Arquitecturas Empresariales", 
+                1, // ID de ASAE (reutilizamos la asignatura)
+                new int[]{nuevoDocente.getId(), 1, 2} // Nuevo docente + María + Carlos
+        );
+        System.out.println("   ✓ Curso con múltiples docentes creado: " + nuevoCurso2.getNombre());
+
+        // 4. Probar método crearFranjaHoraria con los nuevos cursos
+        System.out.println("\n4. Probando método crearFranjaHoraria...");
+        
+        // Agregar franja al primer curso existente
+        FranjaHorario nuevaFranja1 = crearFranjaHoraria(
                 "Sábado",
                 LocalTime.of(9, 0),
                 LocalTime.of(11, 0),
                 1, // ASAE Grupo A
                 6  // Sala de Conferencias
         );
-        System.out.println("Nueva franja creada: " + nuevaFranja.getDia() + " " +
-                nuevaFranja.getHoraInicio() + " - " + nuevaFranja.getHoraFin());
+        System.out.println("   ✓ Franja agregada a curso existente: " + nuevaFranja1.getDia() + " " +
+                nuevaFranja1.getHoraInicio() + " - " + nuevaFranja1.getHoraFin());
 
-        // 3. Probar método consultarFranjasHorariasDelCurso con datos existentes
-        System.out.println("\n3. Probando método consultarFranjasHorariasDelCurso...");
+        // Agregar franjas al nuevo curso creado
+        FranjaHorario nuevaFranja2 = crearFranjaHoraria(
+                "Lunes",
+                LocalTime.of(16, 0),
+                LocalTime.of(18, 0),
+                nuevoCurso1.getId(),
+                4  // Aula 301
+        );
+        System.out.println("   ✓ Franja agregada a nuevo curso: " + nuevaFranja2.getDia() + " " +
+                nuevaFranja2.getHoraInicio() + " - " + nuevaFranja2.getHoraFin());
+
+        FranjaHorario nuevaFranja3 = crearFranjaHoraria(
+                "Miércoles",
+                LocalTime.of(18, 0),
+                LocalTime.of(20, 0),
+                nuevoCurso2.getId(),
+                2  // Laboratorio 1
+        );
+        System.out.println("   ✓ Franja agregada a curso con múltiples docentes: " + nuevaFranja3.getDia() + " " +
+                nuevaFranja3.getHoraInicio() + " - " + nuevaFranja3.getHoraFin());
+
+        // 5. Probar método consultarFranjasHorariasDelCurso con datos existentes
+        System.out.println("\n5. Probando método consultarFranjasHorariasDelCurso...");
         List<FranjaHorario> franjas = consultarFranjasHorariasDelCurso(1); // ASAE Grupo A
-        System.out.println("Total de franjas encontradas para ASAE Grupo A: " + franjas.size());
+        System.out.println("   ✓ Total de franjas encontradas para ASAE Grupo A: " + franjas.size());
 
-        // 4. Consultar franjas de otro curso
-        System.out.println("\n4. Consultando franjas de Base de Datos (Curso ID: 3)...");
+        // 6. Consultar franjas del nuevo curso creado
+        System.out.println("\n6. Consultando franjas del nuevo curso creado...");
+        franjas = consultarFranjasHorariasDelCurso(nuevoCurso1.getId());
+        System.out.println("   ✓ Total de franjas para '" + nuevoCurso1.getNombre() + "': " + franjas.size());
+
+        // 7. Consultar franjas del curso con múltiples docentes
+        System.out.println("\n7. Consultando franjas del curso con múltiples docentes...");
+        franjas = consultarFranjasHorariasDelCurso(nuevoCurso2.getId());
+        System.out.println("   ✓ Total de franjas para '" + nuevoCurso2.getNombre() + "': " + franjas.size());
+
+        // 8. Consultar franjas de otro curso existente
+        System.out.println("\n8. Consultando franjas de Base de Datos (Curso ID: 3)...");
         franjas = consultarFranjasHorariasDelCurso(3);
-        System.out.println("Total de franjas encontradas para Base de Datos: " + franjas.size());
+        System.out.println("   ✓ Total de franjas encontradas para Base de Datos: " + franjas.size());
 
-        // 5. Consultar franjas por docente
-        System.out.println("\n5. Consultando franjas por docente (María González - ID: 1)...");
+        // 9. Probar consultarFranjaByDocente con docentes existentes
+        System.out.println("\n9. Probando método consultarFranjaByDocente...");
+        System.out.println("   Consultando franjas de María González (ID: 1)...");
         consultarFranjaByDocente(1);
 
-        System.out.println("\n=== PRUEBAS COMPLETADAS ===");
-        System.out.println("Total final de franjas en el sistema: " + franjaHorarioRepository.count());
+        System.out.println("\n10. Consultando franjas de Carlos Rodríguez (ID: 2)...");
+        consultarFranjaByDocente(2);
+
+        // 11. Consultar franjas del nuevo docente creado
+        System.out.println("\n11. Consultando franjas del nuevo docente Roberto Fernández...");
+        consultarFranjaByDocente(nuevoDocente.getId());
+
+        // 12. Resumen final
+        System.out.println("\n12. RESUMEN FINAL DEL SISTEMA:");
+        System.out.println("    📚 Total de cursos: " + cursoRepository.count());
+        System.out.println("    👨‍🏫 Total de docentes: " + docenteRepository.count());
+        System.out.println("    ⏰ Total de franjas horarias: " + franjaHorarioRepository.count());
+        System.out.println("    🏢 Total de espacios físicos: " + espacioFisicoRepository.count());
+        System.out.println("    📖 Total de asignaturas: " + asignaturaRepository.count());
+
+        // 13. Verificar que todos los cursos tienen sus relaciones cargadas (EAGER LOADING)
+        System.out.println("\n13. Verificación final de EAGER LOADING:");
+        List<Curso> todosCursos = cursoRepository.findAll();
+        for (Curso curso : todosCursos) {
+            System.out.println("    📘 " + curso.getNombre());
+            System.out.println("       - Franjas: " + (curso.getFranjas() != null ? curso.getFranjas().size() : 0));
+            System.out.println("       - Docentes: " + (curso.getDocentes() != null ? curso.getDocentes().size() : 0));
+            System.out.println("       - Asignatura: " + (curso.getAsignatura() != null ? curso.getAsignatura().getNombre() : "Sin asignatura"));
+        }
+
+        System.out.println("\n🎉 === PRUEBAS COMPLETADAS EXITOSAMENTE ===");
+
     }
+
 
 
 
