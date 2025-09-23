@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Docente extends Persona {
 
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "oficina_id")
     private Oficina oficina;
 
