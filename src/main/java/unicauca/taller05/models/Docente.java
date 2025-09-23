@@ -1,5 +1,6 @@
 package unicauca.taller05.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -18,5 +19,5 @@ public class Docente extends Persona {
     private Oficina oficina;
 
     @ManyToMany(mappedBy = "docentes", fetch = FetchType.EAGER)
-    private List<Curso> cursos;
+    private List<Curso> cursos = new ArrayList<>();
 }

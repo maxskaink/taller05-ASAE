@@ -19,7 +19,7 @@ public class EspacioFisico {
     @Column(unique=true, length=255)
     private String nombre;
 
-    @OneToMany(mappedBy = "espacioFisico")
+    @OneToMany(mappedBy = "espacioFisico", fetch = FetchType.LAZY)
     private List<FranjaHorario> franjaHorarios;
 
     private Integer capacidad;

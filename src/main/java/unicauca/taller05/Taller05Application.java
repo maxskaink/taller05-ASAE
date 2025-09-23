@@ -166,7 +166,6 @@ public class Taller05Application implements CommandLineRunner {
         }
     }
 
-
     /**
      * Elimina un curso y, gracias a la accion en cascada, se eliminan sus franjas horarias.
      * @param cursoId id del curso a eliminar
@@ -180,50 +179,61 @@ public class Taller05Application implements CommandLineRunner {
      * @param idAsignatura id de la asignatura
      * @param idsDocentes id de los docenntes
      */
-    public void crearCurso(String nombre,int idAsignatura, int[]  idsDocentes) {
-        System.out.println("----------------------------------------------------------");
-        System.out.println("Creando curso: " + nombre + " con asignatura ID: " + idAsignatura);
-        Curso curso = new Curso();
-        curso.setNombre(nombre);
-        curso.setAsignatura(asignaturaRepository.getReferenceById(idAsignatura));
-        List<Docente> docentes = new ArrayList<>();
-        for (int idDocente : idsDocentes) {
-            Docente docente = docenteRepository.getReferenceById(idDocente);
-            docentes.add(docente);
-        }
-        curso.setDocentes(docentes);
-        System.out.println("Docentes asignados al curso:");
-        for (Docente docente : docentes) {
-            System.out.println(" - " + docente.getNombre() + " " + docente.getApellido());
-        }
-        cursoRepository.save(curso);
+    public Curso crearCurso(String nombre,int idAsignatura, int[] idsDocentes) {
+    System.out.println("----------------------------------------------------------");
+    System.out.println("Creando curso: " + nombre + " con asignatura ID: " + idAsignatura);
+
+    Curso curso = new Curso();
+    curso.setNombre(nombre);
+    curso.setAsignatura(asignaturaRepository.getReferenceById(idAsignatura));
+
+    for (int idDocente : idsDocentes) {
+        Docente docente = docenteRepository.getReferenceById(idDocente);
+
+        // mantener ambos lados sincronizados
+        curso.getDocentes().add(docente);
+        docente.getCursos().add(curso);
+
+        System.out.println(" - " + docente.getNombre() + " " + docente.getApellido());
     }
 
+    return cursoRepository.save(curso);
+}
+
+
     public void consultarFranjaByDocente(int idDocente) {
-    System.out.println("----------------------------------------------------------");
-    System.out.println("Consultando franjas horarias del docente con ID: " + idDocente);
-    Docente docente = docenteRepository.getReferenceById(idDocente);
-    
-    System.out.println("Docente: " + docente.getNombre() + " " + docente.getApellido());
+        System.out.println("----------------------------------------------------------");
+        System.out.println("Consultando franjas horarias del docente con ID: " + idDocente);
+        Docente docente = docenteRepository.getReferenceById(idDocente);
+        
+        System.out.println("Docente: " + docente.getNombre() + " " + docente.getApellido());
+        if(docente.getCursos()==null){
+            System.out.println("No tiene cursos asignados");
+            return;
+        }
+        for (Curso curso : docente.getCursos()) {
+            System.out.println("  Curso: " + curso.getNombre());
+            if(curso.getFranjas()==null){
+                System.out.println("Este curso no tiene franjas horarias relacionadas");
+                return; 
+            }
+            for (FranjaHorario franja : curso.getFranjas()) {
+                System.out.println("    Franja horaria:");
+                System.out.println("      Día: " + franja.getDia());
+                System.out.println("      Hora inicio: " + franja.getHoraInicio());
+                System.out.println("      Hora fin: " + franja.getHoraFin());
 
-    for (Curso curso : docente.getCursos()) {
-        System.out.println("  Curso: " + curso.getNombre());
-        for (FranjaHorario franja : curso.getFranjas()) {
-            System.out.println("    Franja horaria:");
-            System.out.println("      Día: " + franja.getDia());
-            System.out.println("      Hora inicio: " + franja.getHoraInicio());
-            System.out.println("      Hora fin: " + franja.getHoraFin());
-
-            EspacioFisico espacio = franja.getEspacioFisico();
-            if (espacio != null) {
-                System.out.println("      Espacio físico: " + espacio.getNombre());
-                System.out.println("      Capacidad: " + espacio.getCapacidad());
-            } else {
-                System.out.println("      Espacio físico: No asignado");
+                EspacioFisico espacio = franja.getEspacioFisico();
+                if (espacio != null) {
+                    System.out.println("      Espacio físico: " + espacio.getNombre());
+                    System.out.println("      Capacidad: " + espacio.getCapacidad());
+                } else {
+                    System.out.println("      Espacio físico: No asignado");
+                }
             }
         }
     }
-}
+
 
     @Override
     public void run(String... args) throws Exception {
@@ -260,11 +270,7 @@ public class Taller05Application implements CommandLineRunner {
 
         // 3. Crear curso y asociar docente
         System.out.println("\n3. Creando curso...");
-        Curso curso = new Curso();
-        curso.setNombre("Curso de Arquitecturas de Software - Grupo 1");
-        curso.setAsignatura(asignatura);
-        curso.setDocentes(List.of(docente));
-        curso = cursoRepository.save(curso);
+        Curso curso = crearCurso("curso1", 1, new int[] {1});
         System.out.println("Curso creado: " + curso.getNombre());
 
         // 4. Probar método crearFranjaHoraria
@@ -293,6 +299,11 @@ public class Taller05Application implements CommandLineRunner {
         System.out.println("\n5. Probando método consultarFranjasHorariasDelCurso...");
         List<FranjaHorario> franjas = consultarFranjasHorariasDelCurso(curso.getId());
         System.out.println("Total de franjas encontradas: " + franjas.size());
+
+        ///6, Consultar franja por docente
+        System.out.println("\n Probando metodo consultarFranjaByDocente");
+        consultarFranjaByDocente(curso.getDocentes().get(0).getId());
+
 
         System.out.println("\n=== PRUEBAS COMPLETADAS ===");
     }

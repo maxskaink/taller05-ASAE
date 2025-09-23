@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -30,7 +31,7 @@ public class Curso {
         joinColumns = @JoinColumn(name = "curso_id"),
         inverseJoinColumns = @JoinColumn(name = "docente_id")
     )
-    private List<Docente> docentes;
+    private List<Docente> docentes = new ArrayList<>();
 
     //EAGER
     @OneToMany(mappedBy = "curso", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
