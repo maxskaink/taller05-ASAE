@@ -94,6 +94,10 @@ public class Taller05Application implements CommandLineRunner {
         franjaHorario.setHoraFin(horaFin);
         franjaHorario.setCurso(curso);
         franjaHorario.setEspacioFisico(espacioFisico);
+         if (curso.getFranjas() == null) {
+        curso.setFranjas(new ArrayList<>());
+        }
+        curso.getFranjas().add(franjaHorario);   
         
         // Guardar y retornar la franja horaria
         return franjaHorarioRepository.save(franjaHorario);
