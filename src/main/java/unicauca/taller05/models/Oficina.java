@@ -18,10 +18,10 @@ public class Oficina {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique=true, length=20)
+    @Column(unique=true, length=50)
     private String nombre;
 
-    @Column(length=20)
+    @Column(length=50)
     private String ubicacion;
 
     @OneToMany(mappedBy = "oficina")

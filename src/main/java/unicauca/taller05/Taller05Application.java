@@ -241,75 +241,47 @@ public class Taller05Application implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("=== INICIANDO PRUEBAS ===\n");
+        System.out.println("=== INICIANDO PRUEBAS CON DATOS INICIALES ===\n");
 
-        // 1. Crear datos base necesarios
-        System.out.println("1. Creando datos base...");
-        
-        // Crear asignatura
-        Asignatura asignatura = new Asignatura();
-        asignatura.setNombre("Arquitecturas de Software");
-        asignatura.setCodigo("ASAE");
-        asignatura = asignaturaRepository.save(asignatura);
-        System.out.println("Asignatura creada: " + asignatura.getNombre());
+        // Esperar un poco para que los datos se carguen completamente
+        Thread.sleep(1000);
 
-        // Crear espacio físico
-        EspacioFisico espacioFisico = new EspacioFisico();
-        espacioFisico.setNombre("Aula 201");
-        espacioFisico.setCapacidad(30);
-        espacioFisico = espacioFisicoRepository.save(espacioFisico);
-        System.out.println("Espacio físico creado: " + espacioFisico.getNombre());
+        // 1. Verificar datos cargados inicialmente
+        System.out.println("1. Verificando datos iniciales cargados...");
+        System.out.println("Total de cursos: " + cursoRepository.count());
+        System.out.println("Total de docentes: " + docenteRepository.count());
+        System.out.println("Total de franjas horarias: " + franjaHorarioRepository.count());
 
-        // 2. Crear docente con oficina usando el método
-        System.out.println("\n2. Probando método crearDocenteConPersonaYOficina...");
-        Docente docente = crearDocenteConPersonaYOficina(
-                "Juan Carlos", 
-                "Pérez", 
-                "juan.perez@unicauca.edu.co",
-                "Oficina 101", 
-                "Primer piso"
+        // 2. Probar método crearFranjaHoraria con datos existentes
+        System.out.println("\n2. Probando método crearFranjaHoraria...");
+        FranjaHorario nuevaFranja = crearFranjaHoraria(
+                "Sábado",
+                LocalTime.of(9, 0),
+                LocalTime.of(11, 0),
+                1, // ASAE Grupo A
+                6  // Sala de Conferencias
         );
-        System.out.println("Docente creado: " + docente.getNombre() + " " + docente.getApellido());
-        System.out.println("Oficina asignada: " + docente.getOficina().getNombre());
+        System.out.println("Nueva franja creada: " + nuevaFranja.getDia() + " " +
+                nuevaFranja.getHoraInicio() + " - " + nuevaFranja.getHoraFin());
 
-        // 3. Crear curso y asociar docente
-        System.out.println("\n3. Creando curso...");
-        Curso curso = crearCurso("curso1", 1, new int[] {1});
-        System.out.println("Curso creado: " + curso.getNombre());
+        // 3. Probar método consultarFranjasHorariasDelCurso con datos existentes
+        System.out.println("\n3. Probando método consultarFranjasHorariasDelCurso...");
+        List<FranjaHorario> franjas = consultarFranjasHorariasDelCurso(1); // ASAE Grupo A
+        System.out.println("Total de franjas encontradas para ASAE Grupo A: " + franjas.size());
 
-        // 4. Probar método crearFranjaHoraria
-        System.out.println("\n4. Probando método crearFranjaHoraria...");
-        FranjaHorario franja1 = crearFranjaHoraria(
-                "Lunes", 
-                LocalTime.of(8, 0), 
-                LocalTime.of(10, 0),
-                curso.getId(), 
-                espacioFisico.getId()
-        );
-        System.out.println("Franja horaria 1 creada: " + franja1.getDia() + " " + 
-                          franja1.getHoraInicio() + " - " + franja1.getHoraFin());
+        // 4. Consultar franjas de otro curso
+        System.out.println("\n4. Consultando franjas de Base de Datos (Curso ID: 3)...");
+        franjas = consultarFranjasHorariasDelCurso(3);
+        System.out.println("Total de franjas encontradas para Base de Datos: " + franjas.size());
 
-        FranjaHorario franja2 = crearFranjaHoraria(
-                "Miércoles", 
-                LocalTime.of(14, 0), 
-                LocalTime.of(16, 0),
-                curso.getId(), 
-                espacioFisico.getId()
-        );
-        System.out.println("Franja horaria 2 creada: " + franja2.getDia() + " " + 
-                          franja2.getHoraInicio() + " - " + franja2.getHoraFin());
-
-        // 5. Probar método consultarFranjasHorariasDelCurso
-        System.out.println("\n5. Probando método consultarFranjasHorariasDelCurso...");
-        List<FranjaHorario> franjas = consultarFranjasHorariasDelCurso(curso.getId());
-        System.out.println("Total de franjas encontradas: " + franjas.size());
-
-        ///6, Consultar franja por docente
-        System.out.println("\n Probando metodo consultarFranjaByDocente");
-        consultarFranjaByDocente(curso.getDocentes().get(0).getId());
-
+        // 5. Consultar franjas por docente
+        System.out.println("\n5. Consultando franjas por docente (María González - ID: 1)...");
+        consultarFranjaByDocente(1);
 
         System.out.println("\n=== PRUEBAS COMPLETADAS ===");
+        System.out.println("Total final de franjas en el sistema: " + franjaHorarioRepository.count());
     }
+
+
 
 }
