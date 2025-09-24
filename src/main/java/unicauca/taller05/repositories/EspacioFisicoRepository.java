@@ -7,6 +7,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import unicauca.taller05.models.EspacioFisico;
 
+import java.time.LocalTime;
+
 @Repository
 public interface EspacioFisicoRepository extends JpaRepository<EspacioFisico, Integer> {
     @Modifying
@@ -14,4 +16,18 @@ public interface EspacioFisicoRepository extends JpaRepository<EspacioFisico, In
     public int actualizarCliente(
             @Param("nombre") String nombreCliente,
             @Param("apellido") String apellido);
+
+    @Query("""
+         select (count(f) > 0)
+         from EspacioFisico e
+           join e.franjaHorarios f
+         where e.id = :espacioId
+           and f.dia = :dia
+           and f.horaInicio < :horaFin
+           and f.horaFin > :horaInicio
+         """)
+    boolean estaOcupadoEnHorario(@Param("dia") String dia,
+                                 @Param("horaInicio") LocalTime horaInicio,
+                                 @Param("horaFin") LocalTime horaFin,
+                                 @Param("espacioId") Integer espacioId);
 }

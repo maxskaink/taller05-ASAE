@@ -4,7 +4,6 @@ services:
   mysql:
     image: mysql:8.0
     container_name: mysql-bdtaller05
-    restart: always
     environment:
       MYSQL_DATABASE: bd-taller05
       MYSQL_ROOT_PASSWORD: root
