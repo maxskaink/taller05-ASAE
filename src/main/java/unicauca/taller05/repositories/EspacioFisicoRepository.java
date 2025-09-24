@@ -11,11 +11,7 @@ import java.time.LocalTime;
 
 @Repository
 public interface EspacioFisicoRepository extends JpaRepository<EspacioFisico, Integer> {
-    @Modifying
-    @Query("update EspacioFisico ef set c.nombre = :nombre where c.apellido = :apellido")
-    public int actualizarCliente(
-            @Param("nombre") String nombreCliente,
-            @Param("apellido") String apellido);
+
 
     @Query("""
          select (count(f) > 0)
@@ -30,4 +26,8 @@ public interface EspacioFisicoRepository extends JpaRepository<EspacioFisico, In
                                  @Param("horaInicio") LocalTime horaInicio,
                                  @Param("horaFin") LocalTime horaFin,
                                  @Param("espacioId") Integer espacioId);
+
+    @Query(value = "UPDATE EspacioFisico SET estado = NOT estado WHERE id = :id", nativeQuery = true)
+    int switchEstado(@Param("id") Integer id);
+
 }
