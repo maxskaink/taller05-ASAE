@@ -23,4 +23,6 @@ public class EspacioFisico {
     private List<FranjaHorario> franjaHorarios;
 
     private Integer capacidad;
+
+    private Boolean estado;
 }
