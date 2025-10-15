@@ -1,4 +1,4 @@
-package unicauca.taller05.infraestructura.bd.models;
+package unicauca.taller05.infraestructura.output.persistencia.entidades;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class EspacioFisico {
+public class EspacioFisicoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -20,7 +20,7 @@ public class EspacioFisico {
     private String nombre;
 
     @OneToMany(mappedBy = "espacioFisico", fetch = FetchType.LAZY)
-    private List<FranjaHorario> franjaHorarios;
+    private List<FranjaHorariaEntity> franjaHorarios;
 
     private Integer capacidad;
 

@@ -1,4 +1,4 @@
-package unicauca.taller05.infraestructura.bd.models;
+package unicauca.taller05.infraestructura.output.persistencia.entidades;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Administrativo extends Persona {
+public class AdministrativoEntity extends PersonaEntity {
     @Column(length=255)
     private String rol;
 }

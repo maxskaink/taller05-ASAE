@@ -16,7 +16,7 @@ import unicauca.taller05.infraestructura.bd.models.Docente;
 import unicauca.taller05.infraestructura.bd.models.EspacioFisico;
 import unicauca.taller05.infraestructura.bd.models.FranjaHorario;
 import unicauca.taller05.infraestructura.bd.models.Oficina;
-import unicauca.taller05.infraestructura.bd.repositories.*;
+import unicauca.taller05.infraestructura.output.persistencia.repositorios.*;
 
 @SpringBootApplication
 @Transactional

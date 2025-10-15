@@ -1,22 +1,23 @@
-package unicauca.taller05.infraestructura.bd.repositories;
+package unicauca.taller05.infraestructura.output.persistencia.repositorios;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import unicauca.taller05.infraestructura.bd.models.Curso;
+
+import unicauca.taller05.infraestructura.output.persistencia.entidades.CursoEntity;
 
 import java.util.Optional;
 
 @Repository
-public interface CursoRepository extends JpaRepository<Curso, Integer> {
+public interface CursoRepository extends JpaRepository<CursoEntity, Integer> {
     @Query("""
            select distinct c
-           from Curso c
+           from CursoEntity c
            left join fetch c.franjas f
            left join fetch f.espacioFisico e
            where c.id = :cursoId
            """)
-    Optional<Curso> obtenerCursoConFranjasYEspacio(@Param("cursoId") Integer cursoId);
+    Optional<CursoEntity> obtenerCursoConFranjasYEspacio(@Param("cursoId") Integer cursoId);
 
 }

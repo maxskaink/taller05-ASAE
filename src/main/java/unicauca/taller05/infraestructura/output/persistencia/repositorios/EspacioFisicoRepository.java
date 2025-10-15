@@ -1,15 +1,15 @@
-package unicauca.taller05.infraestructura.bd.repositories;
+package unicauca.taller05.infraestructura.output.persistencia.repositorios;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import unicauca.taller05.infraestructura.bd.models.EspacioFisico;
+import unicauca.taller05.infraestructura.output.persistencia.entidades.EspacioFisicoEntity;
 
 import java.time.LocalTime;
 
 @Repository
-public interface EspacioFisicoRepository extends JpaRepository<EspacioFisico, Integer> {
+public interface EspacioFisicoRepository extends JpaRepository<EspacioFisicoEntity, Integer> {
 
 
     @Query("""

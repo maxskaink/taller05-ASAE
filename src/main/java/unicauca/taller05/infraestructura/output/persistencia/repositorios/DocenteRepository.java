@@ -1,15 +1,15 @@
-package unicauca.taller05.infraestructura.bd.repositories;
+package unicauca.taller05.infraestructura.output.persistencia.repositorios;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import unicauca.taller05.infraestructura.bd.models.Docente;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import unicauca.taller05.infraestructura.output.persistencia.entidades.DocenteEntity;
 
 import java.time.LocalTime;
 
 @Repository
-public interface DocenteRepository extends JpaRepository<Docente, Integer> {
+public interface DocenteRepository extends JpaRepository<DocenteEntity, Integer> {
     @Query(
             value = """
                 select (count(*) > 0)

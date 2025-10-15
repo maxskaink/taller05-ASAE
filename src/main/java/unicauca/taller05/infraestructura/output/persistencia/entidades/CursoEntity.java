@@ -1,4 +1,4 @@
-package unicauca.taller05.infraestructura.bd.models;
+package unicauca.taller05.infraestructura.output.persistencia.entidades;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Curso {
+public class CursoEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -22,7 +22,7 @@ public class Curso {
     // EAGER 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "asignatura_id")
-    private Asignatura asignatura;
+    private AsignaturaEntity asignatura;
 
     //EAGER
     @ManyToMany(fetch = FetchType.EAGER)
@@ -31,10 +31,10 @@ public class Curso {
         joinColumns = @JoinColumn(name = "curso_id"),
         inverseJoinColumns = @JoinColumn(name = "docente_id")
     )
-    private List<Docente> docentes = new ArrayList<>();
+    private List<DocenteEntity> docentes = new ArrayList<>();
 
     //EAGER
     @OneToMany(mappedBy = "curso", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<FranjaHorario> franjas;
+    private List<FranjaHorariaEntity> franjas;
 
 }

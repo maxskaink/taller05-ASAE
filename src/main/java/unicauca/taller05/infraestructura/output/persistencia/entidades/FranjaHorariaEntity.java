@@ -1,4 +1,4 @@
-package unicauca.taller05.infraestructura.bd.models;
+package unicauca.taller05.infraestructura.output.persistencia.entidades;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,7 +11,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class FranjaHorario {
+public class FranjaHorariaEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -23,11 +23,11 @@ public class FranjaHorario {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "curso_id")
-    private Curso curso;
+    private CursoEntity curso;
 
     @ManyToOne(fetch = FetchType.LAZY) //Consultar franja horaria horaria por docente con lazy
     //@ManyToOne(fetch = FetchType.EAGER) //Consultar franja horaria curso con eager
     @JoinColumn(name = "espacio_fisico_id")
-    private EspacioFisico espacioFisico;
+    private EspacioFisicoEntity espacioFisico;
 
 }
