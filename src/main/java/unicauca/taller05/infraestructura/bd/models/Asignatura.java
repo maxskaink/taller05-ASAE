@@ -1,30 +1,27 @@
-package unicauca.taller05.models;
+package unicauca.taller05.infraestructura.bd.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-// Oficina.java
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Oficina {
+public class Asignatura {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique=true, length=50)
+    @Column(length=255)
     private String nombre;
 
     @Column(length=50)
-    private String ubicacion;
+    private String codigo;
 
-    @OneToMany(mappedBy = "oficina")
-    private List<Docente> docentes;
-
+    @OneToMany(mappedBy = "asignatura")
+    private List<Curso> cursos;
 }

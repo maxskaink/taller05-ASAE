@@ -1,10 +1,10 @@
-package unicauca.taller05.repositories;
+package unicauca.taller05.infraestructura.bd.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import unicauca.taller05.models.Curso;
+import unicauca.taller05.infraestructura.bd.models.Curso;
 
 import java.util.Optional;
 

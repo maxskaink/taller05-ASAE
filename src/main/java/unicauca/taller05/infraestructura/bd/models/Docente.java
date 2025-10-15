@@ -1,4 +1,4 @@
-package unicauca.taller05.models;
+package unicauca.taller05.infraestructura.bd.models;
 
 import java.util.ArrayList;
 import java.util.List;

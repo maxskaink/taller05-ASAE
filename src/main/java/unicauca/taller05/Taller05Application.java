@@ -5,20 +5,18 @@ import jakarta.transaction.Transactional;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import unicauca.taller05.models.Asignatura;
-import unicauca.taller05.models.Curso;
-import unicauca.taller05.models.Docente;
-import unicauca.taller05.models.EspacioFisico;
-import unicauca.taller05.models.FranjaHorario;
-import unicauca.taller05.models.Oficina;
-import unicauca.taller05.repositories.*;
+import unicauca.taller05.infraestructura.bd.models.Curso;
+import unicauca.taller05.infraestructura.bd.models.Docente;
+import unicauca.taller05.infraestructura.bd.models.EspacioFisico;
+import unicauca.taller05.infraestructura.bd.models.FranjaHorario;
+import unicauca.taller05.infraestructura.bd.models.Oficina;
+import unicauca.taller05.infraestructura.bd.repositories.*;
 
 @SpringBootApplication
 @Transactional
