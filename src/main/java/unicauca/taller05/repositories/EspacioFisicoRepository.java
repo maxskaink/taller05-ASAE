@@ -8,10 +8,15 @@ import org.springframework.stereotype.Repository;
 import unicauca.taller05.models.EspacioFisico;
 
 import java.time.LocalTime;
+import java.util.List;
 
 @Repository
 public interface EspacioFisicoRepository extends JpaRepository<EspacioFisico, Integer> {
 
+    
+    List<EspacioFisico> findByFranjaHorariosCursoNombreContainingIgnoreCaseAndCapacidadGreaterThanEqualOrderByNombreAsc(String nombre, int capacidad);
+    List<EspacioFisico> findByFranjaHorariosCursoNombre(String nombre);
+    List<EspacioFisico> findByFranjaHorariosCursoId(int id);
 
     @Query("""
          select (count(f) > 0)
