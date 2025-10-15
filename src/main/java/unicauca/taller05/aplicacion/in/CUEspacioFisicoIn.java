@@ -1,5 +1,9 @@
 package unicauca.taller05.aplicacion.in;
 
+import unicauca.taller05.dominio.modelos.EspacioFisico;
+
+import java.util.List;
+
 public interface CUEspacioFisicoIn {
 
     /**
@@ -8,7 +12,7 @@ public interface CUEspacioFisicoIn {
      * @param patron patron a buscar en el nombre
      * @param capacidadMin capacidad minima del espacio fisico
      */
-    void buscarEspacioFisicoPorNombreYCapacacidad(String patron, int capacidadMin);
+    List<EspacioFisico> buscarEspacioFisicoPorNombreYCapacacidad(String patron, int capacidadMin);
 
     /**
      * Actualiza el estado de un espacio fisico a activo o inactivo
@@ -23,5 +27,5 @@ public interface CUEspacioFisicoIn {
      * Lista los espacios fisicos
      * Punto 6.5 del taller
      */
-    void listarEspaciosFisicos();
+    List<EspacioFisico> listarEspaciosFisicos();
 }
