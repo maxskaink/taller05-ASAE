@@ -1,15 +1,15 @@
 package unicauca.taller05.aplicacion.out;
 
-import unicauca.taller05.dominio.modelos.Curso;
 
-import java.util.List;
+import unicauca.taller05.dominio.modelos.Docente;
 
 public interface DocenteRepositoryOut {
 
     /**
-     * Tra de base de datos los cursos que coinsiden con el nombre de la asignatura
-     * @param nombreAsignatura nombre de la asignatura a buscar
-     * @return retorna los cursos encontrados.
+     * Crea un docente en la base de datos
+     * Punto 6.2 del taller.
+     * @param docenteACrear docente a crear
+     * @return docente creado
      */
-    List<Curso> obtenerCursos(String nombreAsignatura);
+    Docente crearDocente(Docente docenteACrear);
 }

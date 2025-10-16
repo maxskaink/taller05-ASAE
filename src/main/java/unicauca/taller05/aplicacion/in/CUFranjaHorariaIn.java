@@ -40,4 +40,11 @@ public interface CUFranjaHorariaIn {
      * @param idCurso id del curso
      */
     List<FranjaHoraria> franjaHorariaPorCurso(Integer idCurso);
+
+    /**
+     * Elimina una franja horaria por su id
+     * Punto 3.3
+     * @param idFranja id de la franja a eliminar
+     */
+    FranjaHoraria eliminarFranjaHorariaPorId(Integer idFranja);
 }
