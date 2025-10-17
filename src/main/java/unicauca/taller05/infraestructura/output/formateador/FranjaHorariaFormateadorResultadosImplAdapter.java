@@ -27,6 +27,11 @@ public class FranjaHorariaFormateadorResultadosImplAdapter implements FranjaHora
     }
 
     @Override
+    public void retornarErrorReglaDeNegocio(String mensaje) {
+        throw new ReglaNegocioException(mensaje);
+    }
+
+    @Override
     public void retornarErrorEliminarFranja(String mensaje) {
         throw new OperacionInvalidaException(mensaje);
     }

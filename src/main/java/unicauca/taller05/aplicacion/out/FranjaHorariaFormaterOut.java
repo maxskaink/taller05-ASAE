@@ -12,6 +12,8 @@ public interface FranjaHorariaFormaterOut {
 
     void retornarErrorConflictoDeHorario(String mensaje);
 
+    void retornarErrorReglaDeNegocio(String mensaje);
+
     void retornarErrorEliminarFranja(String mensaje);
 
     void retornarErrorParametroInvalido(String mensaje);
