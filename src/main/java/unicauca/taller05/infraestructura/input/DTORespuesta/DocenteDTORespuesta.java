@@ -8,5 +8,5 @@ import java.util.List;
 @AllArgsConstructor
 public class DocenteDTORespuesta extends PersonaDTORespueta{
     private OficinaDTORespuesta oficina;
-    private List<CursoDTORespuesta> cursos;
+    //private List<CursoDTORespuesta> cursos;
 }

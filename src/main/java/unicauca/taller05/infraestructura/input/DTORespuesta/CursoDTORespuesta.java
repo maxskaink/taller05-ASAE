@@ -12,5 +12,5 @@ public class CursoDTORespuesta {
     private String nombre;
     private AsignaturaDTORespuesta asignatura;
     private List<DocenteDTORespuesta> docentes;
-    private List<FranjaHorariaDTORespuesta> franjas;
+    //private List<FranjaHorariaDTORespuesta> franjas;
 }

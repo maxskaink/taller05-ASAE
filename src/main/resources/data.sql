@@ -31,18 +31,18 @@ INSERT INTO Asignatura (nombre, codigo) VALUES
 ('Sistemas Distribuidos', 'SD');
 
 -- Insertar espacios físicos
-INSERT INTO EspacioFisico (nombre, capacidad) VALUES 
-('Aula Magna', 100);
-INSERT INTO EspacioFisico (nombre, capacidad) VALUES 
-('Laboratorio 1', 25);
-INSERT INTO EspacioFisico (nombre, capacidad) VALUES 
-('Laboratorio 2', 25);
-INSERT INTO EspacioFisico (nombre, capacidad) VALUES 
-('Aula 301', 40);
-INSERT INTO EspacioFisico (nombre, capacidad) VALUES 
-('Aula 302', 35);
-INSERT INTO EspacioFisico (nombre, capacidad) VALUES 
-('Sala de Conferencias', 50);
+INSERT INTO EspacioFisico (nombre, capacidad, estado) VALUES
+('Aula Magna', 100, true);
+INSERT INTO EspacioFisico (nombre, capacidad, estado) VALUES
+('Laboratorio 1', 25, true);
+INSERT INTO EspacioFisico (nombre, capacidad, estado) VALUES
+('Laboratorio 2', 25, true);
+INSERT INTO EspacioFisico (nombre, capacidad, estado) VALUES
+('Aula 301', 40, true);
+INSERT INTO EspacioFisico (nombre, capacidad, estado) VALUES
+('Aula 302', 35, true);
+INSERT INTO EspacioFisico (nombre, capacidad, estado) VALUES
+('Sala de Conferencias', 50, true);
 
 -- Insertar cursos
 INSERT INTO Curso (nombre, asignatura_id) VALUES 

@@ -58,7 +58,7 @@ public class FranjaHorariaService implements CUFranjaHorariaIn {
         if(franjas.isEmpty())
             franjaFormater.retornarErrorEntidadNoExiste("No se han encontrado franjas horarias para el curso con id: " + idCurso);
 
-        return List.of();
+        return franjas;
     }
 
     @Override

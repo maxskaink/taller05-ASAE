@@ -15,5 +15,5 @@ public class AsignaturaDTORespuesta {
     private Integer id;
     private String nombre;
     private String codigo;
-    private List<CursoDTORespuesta> cursos;
+    //private List<CursoDTORespuesta> cursos;
 }

@@ -9,7 +9,7 @@ import unicauca.taller05.infraestructura.input.DTORespuesta.FranjaHorariaDTOResp
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/franjas")
+@RequestMapping("/api/franja")
 @AllArgsConstructor
 @CrossOrigin(origins = "*")
 public class FranjaHorariaController {
@@ -17,7 +17,7 @@ public class FranjaHorariaController {
     private final CUFranjaHorariaIn cuFranjaHorariaIn;
     private final ModelMapper modelMapper;
 
-    @GetMapping("/{idCurso}")
+    @GetMapping("/curso/{idCurso}/JPQL")
     public List<FranjaHorariaDTORespuesta> obtenerPorIdCursoJPQL(
             @PathVariable Integer idCurso
     ){

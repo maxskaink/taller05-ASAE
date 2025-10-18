@@ -43,7 +43,7 @@ public class EspacioFisicoService implements CUEspacioFisicoIn {
 
         var espacios = espacioRepository.listarEspaciosFisicos();
 
-        if(!espacios.isEmpty()){
+        if(espacios.isEmpty()){
             espacioFormaterOut.retornarErrorEspacioNoEncontrado("No se han encontrado espacios fisicos");
         }
         return espacios;
