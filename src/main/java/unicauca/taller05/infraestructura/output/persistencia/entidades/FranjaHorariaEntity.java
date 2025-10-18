@@ -11,6 +11,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "FranjaHorario")
 public class FranjaHorariaEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

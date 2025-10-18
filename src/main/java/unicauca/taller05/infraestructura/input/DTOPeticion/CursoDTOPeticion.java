@@ -1,4 +1,4 @@
-package unicauca.taller05.infraestructura.input.controllerFranjaHoraria.DTOPeticion;
+package unicauca.taller05.infraestructura.input.DTOPeticion;
 
 
 import jakarta.validation.constraints.*;
@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter

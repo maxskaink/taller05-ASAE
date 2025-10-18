@@ -11,11 +11,9 @@ import java.util.List;
 
 @Repository
 public interface EspacioFisicoRepository extends JpaRepository<EspacioFisicoEntity, Integer> {
-
-
     @Query("""
          select (count(f) > 0)
-         from EspacioFisico e
+         from EspacioFisicoEntity e
            join e.franjaHorarios f
          where e.id = :espacioId
            and f.dia = :dia

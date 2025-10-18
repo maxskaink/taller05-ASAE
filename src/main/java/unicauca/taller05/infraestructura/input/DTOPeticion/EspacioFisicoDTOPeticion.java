@@ -1,4 +1,4 @@
-package unicauca.taller05.infraestructura.input.controllerFranjaHoraria.DTOPeticion;
+package unicauca.taller05.infraestructura.input.DTOPeticion;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -11,11 +11,12 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OficinaDTOPeticion {
+public class EspacioFisicoDTOPeticion {
     @NotEmpty(message = "El nombre no puede estar vacio")
     private String nombre;
-    @NotEmpty(message = "La ubicaicion no puede estar vacia")
-    private String ubicacion;
-    @NotEmpty(message = "No puede estar sin docentes una oficina")
-    private List<@Min(1) Integer> docentes;
+    private List<@Min(1) Integer> idFranjasHoraria;
+    @Min(1)
+    private Integer capacidad;
+    @NotEmpty(message = "El estado no puede estar vacio")
+    private Boolean estado;
 }

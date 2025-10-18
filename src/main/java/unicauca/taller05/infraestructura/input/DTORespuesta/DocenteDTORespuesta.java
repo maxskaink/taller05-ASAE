@@ -1,4 +1,4 @@
-package unicauca.taller05.infraestructura.input.controllerFranjaHoraria.DTORespuesta;
+package unicauca.taller05.infraestructura.input.DTORespuesta;
 import lombok.*;
 import java.util.List;
 

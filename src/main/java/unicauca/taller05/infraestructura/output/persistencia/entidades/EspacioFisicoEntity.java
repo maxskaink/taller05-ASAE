@@ -11,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "EspacioFisico")
 public class EspacioFisicoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
