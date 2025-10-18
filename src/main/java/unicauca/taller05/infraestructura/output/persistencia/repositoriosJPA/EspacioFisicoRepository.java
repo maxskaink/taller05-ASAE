@@ -1,4 +1,4 @@
-package unicauca.taller05.infraestructura.output.persistencia.repositorios;
+package unicauca.taller05.infraestructura.output.persistencia.repositoriosJPA;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import unicauca.taller05.infraestructura.output.persistencia.entidades.EspacioFisicoEntity;
 
 import java.time.LocalTime;
+import java.util.List;
 
 @Repository
 public interface EspacioFisicoRepository extends JpaRepository<EspacioFisicoEntity, Integer> {
@@ -28,5 +29,8 @@ public interface EspacioFisicoRepository extends JpaRepository<EspacioFisicoEnti
 
     @Query(value = "UPDATE EspacioFisico SET estado = NOT estado WHERE id = :id", nativeQuery = true)
     int switchEstado(@Param("id") Integer id);
+
+    List<EspacioFisicoEntity> findByNombreStartingWithIgnoreCaseAndCapacidadGreaterThanEqualOrderByNombreAsc(
+            String nombre, Integer capacidad);
 
 }

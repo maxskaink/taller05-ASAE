@@ -1,4 +1,4 @@
-package unicauca.taller05.infraestructura.output.persistencia.repositorios;
+package unicauca.taller05.infraestructura.output.persistencia.repositoriosJPA;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

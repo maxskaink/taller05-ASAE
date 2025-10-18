@@ -16,7 +16,7 @@ public class FranjaHorariaService implements CUFranjaHorariaIn {
 
     @Override
     public List<FranjaHoraria> obtenerFranjasPorIdCurso(Integer id) {
-        return List.of();
+        return franjaHorariaPorCurso(id); //Creo que cremaos una metodo duplicado
     }
 
     @Override

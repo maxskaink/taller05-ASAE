@@ -3,7 +3,6 @@ package unicauca.taller05.dominio.modelos;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import unicauca.taller05.infraestructura.bd.models.Curso;
 
 import java.util.List;
 
