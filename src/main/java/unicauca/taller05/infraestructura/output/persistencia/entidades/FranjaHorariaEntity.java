@@ -26,8 +26,8 @@ public class FranjaHorariaEntity {
     @JoinColumn(name = "curso_id")
     private CursoEntity curso;
 
-    @ManyToOne(fetch = FetchType.LAZY) //Consultar franja horaria horaria por docente con lazy
-    //@ManyToOne(fetch = FetchType.EAGER) //Consultar franja horaria curso con eager
+    @ManyToOne(fetch = FetchType.LAZY) //Consultar franja horaria curso con lazy
+    //@ManyToOne(fetch = FetchType.EAGER) //Consultar franja horaria horaria por docente con eager
     @JoinColumn(name = "espacio_fisico_id")
     private EspacioFisicoEntity espacioFisico;
 

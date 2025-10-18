@@ -26,6 +26,15 @@ public interface FranjaHorariaRepositoryOut {
     List<FranjaHoraria> obtenerFranjasHorariasPorCurso(Integer idCurso);
 
     /**
+     * obtiene todas las franjas ocupadas por
+     * un docente con un id específico
+     * Punto 6.3
+     * @param idDocente id del docente a buscar las franjas
+     * @return franjas horarias del docente
+     */
+    List<FranjaHoraria> obtenerFranjasHorariasPorDocente(Integer idDocente);
+
+    /**
      * Se realiza un join entre curso, franja Horaria y espacio fisico.
      * Se debe usar JPQL para realizar la consulta.
      * Punto 3.1 del taller.

@@ -1,7 +1,7 @@
 package unicauca.taller05.aplicacion.in;
 
 import unicauca.taller05.dominio.modelos.Curso;
-import unicauca.taller05.dominio.modelos.FranjaHoraria;
+
 
 import java.util.List;
 

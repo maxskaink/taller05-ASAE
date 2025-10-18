@@ -33,4 +33,12 @@ public class FranjaHorariaController {
                 .map(franja -> modelMapper.map(franja, FranjaHorariaDTORespuesta.class)).toList();
     }
 
+
+    @GetMapping("/docente/{idDocente}")
+    public List<FranjaHorariaDTORespuesta> obtenerPorIdDocente(
+            @PathVariable Integer idDocente
+    ){
+        return cuFranjaHorariaIn.franjaHorariaPorDocente(idDocente).stream()
+                .map(franja -> modelMapper.map(franja, FranjaHorariaDTORespuesta.class)).toList();
+    }
 }

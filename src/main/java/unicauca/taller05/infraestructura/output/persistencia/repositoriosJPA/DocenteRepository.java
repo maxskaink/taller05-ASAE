@@ -29,4 +29,7 @@ public interface DocenteRepository extends JpaRepository<DocenteEntity, Integer>
                                           @Param("horaFin") LocalTime horaFin,
                                           @Param("docenteId") Integer docenteId);
 
+  // Verifica si existe un docente con el correo dado (utiliza convención de Spring Data JPA)
+  boolean existsByCorreo(String correo);
+
 }

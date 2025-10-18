@@ -24,4 +24,18 @@ public interface FranjaHorarioRepository extends JpaRepository<FranjaHorariaEnti
     List<FranjaHorariaEntity> obtenerFranjasPorIdCursoConJoin(@Param("cursoId") Integer cursoId);
 
     List<FranjaHorariaEntity> findByCursoId(Integer cursoId);
+
+
+    @Query("""
+    SELECT DISTINCT fh
+    FROM FranjaHorariaEntity fh
+    JOIN FETCH fh.curso c
+    JOIN c.docentes d
+    JOIN FETCH fh.espacioFisico ef
+    WHERE d.id = :docenteId
+    """)
+    List<FranjaHorariaEntity> obtenerFranjasPorDocenteIdConJoin(@Param("docenteId") Integer docenteId);
+
+
+    
 }

@@ -33,6 +33,13 @@ public class FranjaRepositoryAdapter implements FranjaHorariaRepositoryOut {
     }
 
     @Override
+    public List<FranjaHoraria> obtenerFranjasHorariasPorDocente(Integer idDocente) {
+        return franjaHorarioRepositoryJPA.obtenerFranjasPorDocenteIdConJoin(idDocente).stream()
+                .map(entity -> modelMapper.map(entity, FranjaHoraria.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<FranjaHoraria> obtenerFranjasHorariasPorCursoJPQL(Integer idCurso) {
         return franjaHorarioRepositoryJPA.obtenerFranjasPorIdCursoConJoin(idCurso).stream()
                 .map(entity -> modelMapper.map(entity, FranjaHoraria.class))

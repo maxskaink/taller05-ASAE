@@ -10,6 +10,10 @@ import unicauca.taller05.aplicacion.out.FranjaHorariaFormaterOut;
 import unicauca.taller05.aplicacion.out.FranjaHorariaRepositoryOut;
 import unicauca.taller05.dominio.casosUso.EspacioFisicoService;
 import unicauca.taller05.dominio.casosUso.FranjaHorariaService;
+import unicauca.taller05.aplicacion.in.CUDocenteIn;
+import unicauca.taller05.aplicacion.out.DocenteFormaterOut;
+import unicauca.taller05.aplicacion.out.DocenteRepositoryOut;
+import unicauca.taller05.dominio.casosUso.DocenteService;
 
 @Configuration
 public class ServicesConfig {
@@ -20,6 +24,14 @@ public class ServicesConfig {
             FranjaHorariaRepositoryOut franjaRepository
     ) {
         return new FranjaHorariaService(franjaFormater,franjaRepository);
+    }
+
+    @Bean
+    public CUDocenteIn configDocenteService(
+            DocenteFormaterOut docenteFormaterOut,
+            DocenteRepositoryOut docenteRepositoryOut
+    ) {
+        return new DocenteService(docenteFormaterOut, docenteRepositoryOut);
     }
 
     @Bean

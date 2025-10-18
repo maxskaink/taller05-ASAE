@@ -1,10 +1,6 @@
 package unicauca.taller05.aplicacion.out;
 
 import unicauca.taller05.dominio.modelos.EspacioFisico;
-import unicauca.taller05.dominio.modelos.FranjaHoraria;
-
-import java.time.DayOfWeek;
-import java.time.LocalTime;
 import java.util.List;
 
 public interface EspacioRepositoryOut {

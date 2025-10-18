@@ -42,7 +42,17 @@ public class FranjaHorariaService implements CUFranjaHorariaIn {
 
     @Override
     public List<FranjaHoraria> franjaHorariaPorDocente(Integer idDocente) {
-        return List.of();
+        if(idDocente == null){
+            franjaFormater.retornarErrorParametroInvalido("El id del docente no puede ser nulo");
+            return List.of();
+        }
+
+        var franjas = franjaRepository.obtenerFranjasHorariasPorDocente(idDocente);
+
+        if(franjas.isEmpty())
+            franjaFormater.retornarErrorEntidadNoExiste("No se han encontrado franjas horarias para el docente con id: " + idDocente);
+
+        return franjas;
     }
 
     @Override

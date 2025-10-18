@@ -12,4 +12,11 @@ public interface DocenteRepositoryOut {
      * @return docente creado
      */
     Docente crearDocente(Docente docenteACrear);
+
+    /**
+     * Verifica si existe un docente con el correo dado.
+     * @param correo correo a verificar
+     * @return true si existe, false en caso contrario
+     */
+    boolean existePorCorreo(String correo);
 }
