@@ -32,7 +32,7 @@ public interface FranjaHorariaRepositoryOut {
      * @param idCurso id del curso a buscar las franjas horarias
      * @return datos de las franjas, espacio fisico y curso relacionados al curso.
      */
-    List<FranjaHoraria> obtenerFranjasHorariasPorCursoJOQL(Integer idCurso);
+    List<FranjaHoraria> obtenerFranjasHorariasPorCursoJPQL(Integer idCurso);
 
     /**
      * Utiliza un JPQL para obtener las franjas horarias que ocupan un espacio fisico
