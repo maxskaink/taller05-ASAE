@@ -33,4 +33,10 @@ public class EspacioFisicoController {
                 .map(espacio -> modelMapper.map(espacio, EspacioFisicoDTORespuesta.class)).toList();
     }
 
+    @PutMapping("/estado/{id}")
+    public boolean actualizarEstadoEspacioFisico(
+            @PathVariable Integer id
+    ){
+        return cuEspacioHorariaIn.actualizarEstado(id);     
+    }
 }

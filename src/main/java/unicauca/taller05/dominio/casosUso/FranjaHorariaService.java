@@ -29,7 +29,7 @@ public class FranjaHorariaService implements CUFranjaHorariaIn {
         var franjas = franjaRepository.obtenerFranjasHorariasPorCursoJPQL(id);
 
         if(franjas.isEmpty()){
-            franjaFormater.retornarErrorEntidadNoExiste("No se han encontrado franjas horarias para el curso con id: " + id);
+            franjaFormater.retornarErrorEntidadNoExiste("No se han encontrado franjas horarias para el curso co1n id: " + id);
         }
 
         return franjas;
@@ -73,6 +73,10 @@ public class FranjaHorariaService implements CUFranjaHorariaIn {
 
     @Override
     public FranjaHoraria eliminarFranjaHorariaPorId(Integer idFranja) {
-        return null;
+        if(idFranja == null){
+            franjaFormater.retornarErrorParametroInvalido("El id de la franja no puede ser nulo");
+            return null;
+        }
+        return franjaRepository.eliminarFranjaHorariaPorId(idFranja);
     }
 }

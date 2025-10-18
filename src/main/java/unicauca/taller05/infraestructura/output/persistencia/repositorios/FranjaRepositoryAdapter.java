@@ -58,6 +58,9 @@ public class FranjaRepositoryAdapter implements FranjaHorariaRepositoryOut {
 
     @Override
     public FranjaHoraria eliminarFranjaHorariaPorId(Integer idFranja) {
-        return null;
+        return franjaHorarioRepositoryJPA.findById(idFranja).map(entity -> {
+            franjaHorarioRepositoryJPA.deleteById(idFranja);
+            return modelMapper.map(entity, FranjaHoraria.class);
+        }).orElse(null);
     }
 }

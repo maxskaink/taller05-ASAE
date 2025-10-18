@@ -21,10 +21,9 @@ public interface EspacioRepositoryOut {
      * Se debe realizar con SQL nativo
      * Punto 3.2 del taller.
      * @param id id del espacio fisico a actualizar
-     * @param estado estado nuevo del espacio fisico
      * @return retorna true si se actualizo el estado correctamente, false en caso contrario
      */
-    boolean actualizarEstado(Integer id, boolean estado);
+    boolean actualizarEstado(Integer id);
 
     /**
      * Lista todos los espacios fisicos

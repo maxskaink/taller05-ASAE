@@ -25,7 +25,10 @@ public class EspacioRepositoryAdapter implements EspacioRepositoryOut {
     }
 
     @Override
-    public boolean actualizarEstado(Integer id, boolean estado) {
+    public boolean actualizarEstado(Integer id) {
+        if(espacioRepositoryJPA.switchEstado(id) > 0){
+            return true;
+        }
         return false;
     }
 

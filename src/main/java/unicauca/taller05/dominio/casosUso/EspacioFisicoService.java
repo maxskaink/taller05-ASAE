@@ -1,6 +1,7 @@
 package unicauca.taller05.dominio.casosUso;
 
 import lombok.AllArgsConstructor;
+import lombok.experimental.var;
 import unicauca.taller05.aplicacion.in.CUEspacioFisicoIn;
 import unicauca.taller05.aplicacion.out.EspacioFormaterOut;
 import unicauca.taller05.aplicacion.out.EspacioRepositoryOut;
@@ -33,9 +34,22 @@ public class EspacioFisicoService implements CUEspacioFisicoIn {
         return espaciosEncontrados;
     }
 
+    /**
+     * Actualiza el estado de un espacio fisico
+     * @param id Id del espacio fisico
+     * @param estado Nuevo estado del espacio fisico
+     * @return true si se actualizo el estado, false en caso contrario
+     */
     @Override
-    public boolean actualizarEstado(Integer id, boolean estado) {
-        return false;
+    public boolean actualizarEstado(Integer id) {
+        if(id == null || id <= 0){
+            espacioFormaterOut.retornarErrorParametroInvalido("El id no puede ser nulo o menor o igual a cero");
+            return false;
+        }
+        if(!espacioRepository.actualizarEstado(id) ){
+            espacioFormaterOut.retornarErrorEspacioNoEncontrado("No se pudo actualizar el estado del espacio con id: " + id);
+        }   
+        return  true;
     }
 
     @Override

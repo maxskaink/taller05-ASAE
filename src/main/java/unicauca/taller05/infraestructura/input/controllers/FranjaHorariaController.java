@@ -41,4 +41,12 @@ public class FranjaHorariaController {
         return cuFranjaHorariaIn.franjaHorariaPorDocente(idDocente).stream()
                 .map(franja -> modelMapper.map(franja, FranjaHorariaDTORespuesta.class)).toList();
     }
+
+    @DeleteMapping("/{idFranja}")
+    public FranjaHorariaDTORespuesta eliminarFranjaPorId(
+            @PathVariable Integer idFranja
+    ){
+        var franjaEliminada = cuFranjaHorariaIn.eliminarFranjaHorariaPorId(idFranja);
+        return modelMapper.map(franjaEliminada, FranjaHorariaDTORespuesta.class);
+    }   
 }

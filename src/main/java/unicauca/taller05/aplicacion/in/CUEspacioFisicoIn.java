@@ -18,10 +18,9 @@ public interface CUEspacioFisicoIn {
      * Actualiza el estado de un espacio fisico a activo o inactivo
      * Punto 3.2 del taller
      * @param id id del espacio fisico a actualizar
-     * @param estado nuevo estado del espacio fisico
      * @return retorna true si se actualizo el estado correctamente, false en caso contrario
      */
-    boolean actualizarEstado(Integer id, boolean estado);
+    boolean actualizarEstado(Integer id);
 
     /**
      * Lista los espacios fisicos
