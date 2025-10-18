@@ -14,21 +14,22 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FranjaHorariaDTOPeticion {
-    @NotBlank(message = "El día no puede estar vacío")
+    @NotBlank(message = "{franjaHoraria.dia.vacio}")
     @Pattern(
             regexp = "^(Lunes|Martes|Miercoles|Jueves|Viernes|Sabado|Domingo)$",
-            message = "El día debe ser un valor válido (Lunes, Martes, Miercoles, Jueves, Viernes, Sabado o Domingo)"
+            message = "{franjaHoraria.dia.invalido}"
     )
+
     private String dia;
-    @NotNull(message = "La hora de inicio es obligatoria")
+    @NotNull(message = "{franjaHoraria.horaInicio.vacio}")
     private LocalTime horaInicio;
-    @NotNull(message = "La hora de fin es obligatoria")
+    @NotNull(message = "{franjaHoraria.horaFin.vacio}")
     private LocalTime horaFin;
-    @Min(1)
-    @NotNull(message = "El id del curso es obligatorio")
+    @PositiveOrZero(message = "{franjaHoraria.idCurso.positivo}")
+    @NotNull(message = "{franjaHoraria.idCurso.vacio}")
     private int idCurso;
     @Min(1)
-    @NotNull(message = "El id del curso es obligatorio")
+    @NotNull(message = "{franjaHoraria.idEspacioFisico.vacio}")
     private int idEspacioFisico;
 
 }

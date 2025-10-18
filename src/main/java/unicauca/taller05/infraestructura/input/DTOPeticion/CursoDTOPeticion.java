@@ -14,14 +14,14 @@ import java.util.List;
 @AllArgsConstructor
 public class CursoDTOPeticion {
 
-    @NotEmpty(message = "El nombre no puede estar vacio")
-    @Size(max = 255, message = "El nombre no puede superar los 255 caracteres")
+    @NotBlank(message = "{curso.nombre}")
+    @Size(max = 255, message = "{curso.nombre.largo}")
     private String nombre;
-    @NotNull(message = "Debe especificar la asignatura del curso")
+    @NotNull(message = "{curso.asignatura}")
     private Integer asignaturaId;
-    @NotEmpty(message = "Debe asignar al menos un docente")
-    private List<Integer> docentesIds;
-    @NotEmpty(message = "Debe registrar al menos una franja horaria")
-    private List<FranjaHorariaDTOPeticion> franjas;
+    @NotEmpty(message = "{curso.docentes}")
+    private List<@Min(1)Integer> docentesIds;
+    @NotEmpty(message = "{curso.franjas}")
+    private List<@Min(1)Integer> franjas;
 
 }

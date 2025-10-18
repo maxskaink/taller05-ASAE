@@ -11,6 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdministrativoDTOPeticion extends PersonaDTOPeticion {
-    @NotEmpty(message = "El rol del administrador no puede estar vacio")
+    @NotEmpty(message = "{administrativo.rol}")
     private String rol;
 }

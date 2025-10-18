@@ -1,6 +1,7 @@
 package unicauca.taller05.infraestructura.input.DTOPeticion;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,10 +13,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OficinaDTOPeticion {
-    @NotEmpty(message = "El nombre no puede estar vacio")
+    @NotEmpty(message = "{asignatura.nombre.vacio}")
     private String nombre;
-    @NotEmpty(message = "La ubicaicion no puede estar vacia")
+    @NotEmpty(message = "{asignatura.ubicacion.vacio}")
     private String ubicacion;
-    @NotEmpty(message = "No puede estar sin docentes una oficina")
-    private List<@Min(1) Integer> docentes;
+    private List<@PositiveOrZero(message = "{asignatura.doecentes.asigandos}") Integer> docentes;
 }
