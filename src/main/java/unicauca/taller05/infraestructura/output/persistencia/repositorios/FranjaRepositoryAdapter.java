@@ -2,6 +2,7 @@ package unicauca.taller05.infraestructura.output.persistencia.repositorios;
 
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,11 +17,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
-@AllArgsConstructor
 public class FranjaRepositoryAdapter implements FranjaHorariaRepositoryOut {
 
     private final FranjaHorarioRepository franjaHorarioRepositoryJPA;
     private final ModelMapper modelMapper;
+    @Qualifier("franjaMapperWithoutCourse")
+    private final ModelMapper modelMapperWithoutCourse;
+
+    public FranjaRepositoryAdapter(
+            FranjaHorarioRepository franjaHorarioRepositoryJPA,
+            ModelMapper modelMapper,
+            @Qualifier("franjaMapperWithoutCourse") ModelMapper modelMapperWithoutCourse) {
+        this.franjaHorarioRepositoryJPA = franjaHorarioRepositoryJPA;
+        this.modelMapper = modelMapper;
+        this.modelMapperWithoutCourse = modelMapperWithoutCourse;
+    }
 
     @Override
     public FranjaHoraria crearFranjaHoraria(FranjaHoraria franjaHoraria) {
@@ -33,7 +44,7 @@ public class FranjaRepositoryAdapter implements FranjaHorariaRepositoryOut {
     public List<FranjaHoraria> obtenerFranjasHorariasPorCurso(Integer idCurso) {
 
         return franjaHorarioRepositoryJPA.findByCursoId(idCurso).stream()
-                .map(entity->modelMapper.map(entity, FranjaHoraria.class))
+                .map(entity->modelMapperWithoutCourse.map(entity, FranjaHoraria.class))
                 .collect(Collectors.toList());
     }
 
@@ -47,7 +58,7 @@ public class FranjaRepositoryAdapter implements FranjaHorariaRepositoryOut {
     @Override
     public List<FranjaHoraria> obtenerFranjasHorariasPorCursoJPQL(Integer idCurso) {
         return franjaHorarioRepositoryJPA.obtenerFranjasPorIdCursoConJoin(idCurso).stream()
-                .map(entity -> modelMapper.map(entity, FranjaHoraria.class))
+                .map(entity -> modelMapperWithoutCourse.map(entity, FranjaHoraria.class))
                 .collect(Collectors.toList());
     }
 

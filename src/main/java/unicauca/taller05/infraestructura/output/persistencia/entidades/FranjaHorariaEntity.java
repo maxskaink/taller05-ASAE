@@ -22,12 +22,11 @@ public class FranjaHorariaEntity {
     private LocalTime horaInicio;
     private LocalTime horaFin;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "curso_id")
     private CursoEntity curso;
 
-    @ManyToOne(fetch = FetchType.LAZY) //Consultar franja horaria curso con lazy
-    //@ManyToOne(fetch = FetchType.EAGER) //Consultar franja horaria horaria por docente con eager
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "espacio_fisico_id")
     private EspacioFisicoEntity espacioFisico;
 
