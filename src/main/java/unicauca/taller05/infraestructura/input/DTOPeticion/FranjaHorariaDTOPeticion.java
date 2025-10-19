@@ -16,7 +16,7 @@ import java.time.LocalTime;
 public class FranjaHorariaDTOPeticion {
     @NotBlank(message = "{franjaHoraria.dia.vacio}")
     @Pattern(
-            regexp = "^(Lunes|Martes|Miercoles|Jueves|Viernes|Sabado|Domingo)$",
+            regexp = "^(Lunes|Martes|Miercoles|Jueves|Viernes|Sabado)$",
             message = "{franjaHoraria.dia.invalido}"
     )
 

@@ -5,14 +5,19 @@ import unicauca.taller05.aplicacion.in.CUFranjaHorariaIn;
 import unicauca.taller05.aplicacion.out.FranjaHorariaFormaterOut;
 import unicauca.taller05.aplicacion.out.FranjaHorariaRepositoryOut;
 import unicauca.taller05.dominio.modelos.FranjaHoraria;
+import unicauca.taller05.infraestructura.input.DTOPeticion.FranjaHorariaDTOPeticion;
 
+import java.time.LocalTime;
 import java.util.List;
+
+import org.modelmapper.ModelMapper;
 
 @AllArgsConstructor
 public class FranjaHorariaService implements CUFranjaHorariaIn {
 
     private final FranjaHorariaFormaterOut  franjaFormater;
     private final FranjaHorariaRepositoryOut franjaRepository;
+    private final ModelMapper modelMapper;
 
     @Override
     public List<FranjaHoraria> obtenerFranjasPorIdCurso(Integer id) {
@@ -36,10 +41,36 @@ public class FranjaHorariaService implements CUFranjaHorariaIn {
     }
 
     @Override
-    public FranjaHoraria crearFranjaHoraria(FranjaHoraria franjaHorariaACrear) {
-        return null;
-    }
+    public FranjaHoraria crearFranjaHoraria(FranjaHorariaDTOPeticion franjaHorariaACrear) {
+        if (franjaHorariaACrear == null) {
+            franjaFormater.retornarErrorParametroInvalido("La franja horaria no puede ser nula");
+            return null;
+        }
 
+        LocalTime inicio = franjaHorariaACrear.getHoraInicio();
+        LocalTime fin = franjaHorariaACrear.getHoraFin();
+
+        if (!inicio.isBefore(fin)) {
+            franjaFormater.retornarErrorParametroInvalido("La hora de inicio debe ser anterior a la hora de fin");
+            return null;
+        }
+
+        List<FranjaHoraria> existentes = franjaRepository.obtenerFranjasHorariasPorCurso(franjaHorariaACrear.getIdCurso());
+        
+        boolean solapado = existentes.stream().anyMatch(f ->
+            f.getDia().equals(franjaHorariaACrear.getDia()) &&
+            (inicio.isBefore(f.getHoraFin()) && fin.isAfter(f.getHoraInicio()))
+        );
+
+        if (solapado) {
+            franjaFormater.retornarErrorParametroInvalido("La franja horaria se solapa con otra existente en el mismo día");
+            return null;
+        }
+
+        FranjaHoraria franjaHoraria = modelMapper.map(franjaHorariaACrear, FranjaHoraria.class);
+        
+        return franjaRepository.crearFranjaHoraria(franjaHoraria);
+    }
     @Override
     public List<FranjaHoraria> franjaHorariaPorDocente(Integer idDocente) {
         if(idDocente == null){

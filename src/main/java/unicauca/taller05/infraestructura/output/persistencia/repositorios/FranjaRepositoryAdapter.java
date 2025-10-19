@@ -24,7 +24,9 @@ public class FranjaRepositoryAdapter implements FranjaHorariaRepositoryOut {
 
     @Override
     public FranjaHoraria crearFranjaHoraria(FranjaHoraria franjaHoraria) {
-        return null;
+        var entity = modelMapper.map(franjaHoraria, FranjaHorariaEntity.class);
+        var guardada = franjaHorarioRepositoryJPA.save(entity);
+        return modelMapper.map(guardada, FranjaHoraria.class);
     }
 
     @Override

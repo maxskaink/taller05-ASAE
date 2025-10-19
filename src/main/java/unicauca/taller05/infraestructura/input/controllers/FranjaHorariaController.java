@@ -2,8 +2,12 @@ package unicauca.taller05.infraestructura.input.controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import jakarta.validation.Valid;
 import unicauca.taller05.aplicacion.in.CUFranjaHorariaIn;
 import org.modelmapper.ModelMapper;
+
+import unicauca.taller05.infraestructura.input.DTOPeticion.FranjaHorariaDTOPeticion;
 import unicauca.taller05.infraestructura.input.DTORespuesta.FranjaHorariaDTORespuesta;
 
 import java.util.List;
@@ -49,4 +53,13 @@ public class FranjaHorariaController {
         var franjaEliminada = cuFranjaHorariaIn.eliminarFranjaHorariaPorId(idFranja);
         return modelMapper.map(franjaEliminada, FranjaHorariaDTORespuesta.class);
     }   
+
+    @PostMapping()
+    public FranjaHorariaDTORespuesta crearFranja(@Valid @RequestBody FranjaHorariaDTOPeticion franjaCrearDTO){
+        // El controlador solo pasa el DTO al servicio
+        var franjaCreada = cuFranjaHorariaIn.crearFranjaHoraria(franjaCrearDTO);
+        
+        // Solo convierte la respuesta a DTO
+        return modelMapper.map(franjaCreada, FranjaHorariaDTORespuesta.class);
+    }
 }

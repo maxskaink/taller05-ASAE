@@ -1,5 +1,6 @@
 package unicauca.taller05.infraestructura.configuration;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import unicauca.taller05.aplicacion.in.CUEspacioFisicoIn;
@@ -21,9 +22,10 @@ public class ServicesConfig {
     @Bean
     public CUFranjaHorariaIn configFranjaHorariaService(
             FranjaHorariaFormaterOut franjaFormater,
-            FranjaHorariaRepositoryOut franjaRepository
+            FranjaHorariaRepositoryOut franjaRepository,
+            ModelMapper modelMapper  
     ) {
-        return new FranjaHorariaService(franjaFormater,franjaRepository);
+        return new FranjaHorariaService(franjaFormater,franjaRepository, modelMapper);
     }
 
     @Bean

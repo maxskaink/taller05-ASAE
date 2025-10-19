@@ -1,6 +1,7 @@
 package unicauca.taller05.aplicacion.in;
 
 import unicauca.taller05.dominio.modelos.FranjaHoraria;
+import unicauca.taller05.infraestructura.input.DTOPeticion.FranjaHorariaDTOPeticion;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public interface CUFranjaHorariaIn {
      * Punto 6.1 del taller
      * @param franjaHorariaACrear franja horaria a crear
      */
-    FranjaHoraria crearFranjaHoraria(FranjaHoraria franjaHorariaACrear);
+    FranjaHoraria crearFranjaHoraria(FranjaHorariaDTOPeticion franjaHorariaACrear);
 
     /**
      * Lista de las franjas horarias asignadas a un docente
@@ -47,4 +48,7 @@ public interface CUFranjaHorariaIn {
      * @param idFranja id de la franja a eliminar
      */
     FranjaHoraria eliminarFranjaHorariaPorId(Integer idFranja);
+
+
+    
 }
