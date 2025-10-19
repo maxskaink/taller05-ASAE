@@ -72,11 +72,15 @@ public class FranjaHorariaService implements CUFranjaHorariaIn {
     }
 
     @Override
-    public FranjaHoraria eliminarFranjaHorariaPorId(Integer idFranja) {
-        if(idFranja == null){
-            franjaFormater.retornarErrorParametroInvalido("El id de la franja no puede ser nulo");
+    public FranjaHoraria eliminarFranjaHorariaPorId(Integer cursoId) {
+        if(franjaRepository.obtenerFranjasHorariasPorCurso(cursoId).isEmpty()){
+            franjaFormater.retornarErrorEntidadNoExiste("No se ha encontrado una franja horaria con el id: " + cursoId);
             return null;
         }
-        return franjaRepository.eliminarFranjaHorariaPorId(idFranja);
+        if(cursoId == null){
+            franjaFormater.retornarErrorParametroInvalido("El id del curso no puede ser nulo");
+            return null;
+        }
+        return franjaRepository.eliminarFranjaHorariaPorId(cursoId);
     }
 }

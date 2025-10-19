@@ -71,7 +71,7 @@ public interface FranjaHorariaRepositoryOut {
      * Elimina una franja horaria por su id
      * Usando JPQL
      * Punto 3.3
-     * @param idFranja id de la franja a eliminar
+     * @param idCurso id del curso a eliminar las franjas
      */
-    FranjaHoraria eliminarFranjaHorariaPorId(Integer idFranja);
+    FranjaHoraria eliminarFranjaHorariaPorId(Integer idCurso);
 }

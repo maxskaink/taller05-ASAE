@@ -3,8 +3,11 @@ package unicauca.taller05.infraestructura.output.persistencia.repositorios;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import unicauca.taller05.aplicacion.out.FranjaHorariaRepositoryOut;
 import unicauca.taller05.dominio.modelos.FranjaHoraria;
+import unicauca.taller05.infraestructura.output.persistencia.entidades.FranjaHorariaEntity;
 import unicauca.taller05.infraestructura.output.persistencia.repositoriosJPA.FranjaHorarioRepository;
 
 import java.time.DayOfWeek;
@@ -55,12 +58,15 @@ public class FranjaRepositoryAdapter implements FranjaHorariaRepositoryOut {
     public List<FranjaHoraria> obtenerFranjasOcupadasPorDocente(DayOfWeek dia, LocalTime horaInicio, LocalTime horaFin, Integer idDocente) {
         return List.of();
     }
-
+    @Transactional
     @Override
-    public FranjaHoraria eliminarFranjaHorariaPorId(Integer idFranja) {
-        return franjaHorarioRepositoryJPA.findById(idFranja).map(entity -> {
-            franjaHorarioRepositoryJPA.deleteById(idFranja);
-            return modelMapper.map(entity, FranjaHoraria.class);
-        }).orElse(null);
+    public FranjaHoraria eliminarFranjaHorariaPorId(Integer cursoId) {
+        List<FranjaHorariaEntity> franjas = franjaHorarioRepositoryJPA.findByCursoId(cursoId);
+        franjaHorarioRepositoryJPA.eliminarFranjasPorCurso(cursoId);
+
+        return franjas.stream()
+                .findFirst()
+                .map(f -> modelMapper.map(f, FranjaHoraria.class))
+                .orElse(null);
     }
 }
