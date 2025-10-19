@@ -8,8 +8,10 @@ import java.util.Map;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 
+import lombok.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -83,6 +85,23 @@ public class RestApiExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(BindException.class)
+    public ResponseEntity<Map<String, String>> handleBindException(BindException ex) {
+        return getMapResponseEntity(ex);
+    }
+
+    @NonNull
+    private ResponseEntity<Map<String, String>> getMapResponseEntity(BindException ex) {
+        Map<String, String> errores = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String campo = ((FieldError) error).getField();
+            String mensajeDeError = error.getDefaultMessage();
+            errores.put(campo, mensajeDeError);
+        });
+        return new ResponseEntity<>(errores, HttpStatus.BAD_REQUEST);
+    }
+
+
     @ExceptionHandler(OperacionInvalidaException.class)
     public ResponseEntity<Error> handleOperacionInvalida(final HttpServletRequest req,
                                                          final OperacionInvalidaException ex) {
@@ -107,13 +126,7 @@ public class RestApiExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        Map<String, String> errores = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String campo = ((FieldError) error).getField();
-            String mensajeDeError = error.getDefaultMessage();
-            errores.put(campo, mensajeDeError);
-        });
-        return new ResponseEntity<>(errores, HttpStatus.BAD_REQUEST);
+        return getMapResponseEntity(ex);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
