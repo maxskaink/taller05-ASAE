@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import unicauca.taller05.infraestructura.output.persistencia.entidades.CursoEntity;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -20,4 +21,6 @@ public interface CursoRepository extends JpaRepository<CursoEntity, Integer> {
            """)
     Optional<CursoEntity> obtenerCursoConFranjasYEspacio(@Param("cursoId") Integer cursoId);
 
+    List<CursoEntity> findByAsignaturaNombreIgnoreCase(String nombre);
+    List<CursoEntity> findByAsignaturaNombreContainingIgnoreCase(String nombre);
 }
