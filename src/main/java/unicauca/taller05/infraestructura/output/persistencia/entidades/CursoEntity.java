@@ -20,6 +20,9 @@ public class CursoEntity {
     @Column(length=255)
     private String nombre;
 
+    @Column(columnDefinition = "integer default 30")
+    private Integer capacidad;
+
     // EAGER 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "asignatura_id")

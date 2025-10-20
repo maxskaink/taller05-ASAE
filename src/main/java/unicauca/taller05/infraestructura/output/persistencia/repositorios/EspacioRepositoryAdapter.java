@@ -8,6 +8,7 @@ import unicauca.taller05.dominio.modelos.EspacioFisico;
 import unicauca.taller05.infraestructura.output.persistencia.repositoriosJPA.EspacioFisicoRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
@@ -22,6 +23,11 @@ public class EspacioRepositoryAdapter implements EspacioRepositoryOut {
                 nombre,
                 capacidadMinima
         ).stream().map(entity -> modelMapper.map(entity, EspacioFisico.class)).toList();
+    }
+
+    @Override
+    public Optional<EspacioFisico> obtenerEspacioFisicoPorId(Integer id) {
+        return espacioRepositoryJPA.findById(id).map(entity -> modelMapper.map(entity, EspacioFisico.class));
     }
 
     @Override

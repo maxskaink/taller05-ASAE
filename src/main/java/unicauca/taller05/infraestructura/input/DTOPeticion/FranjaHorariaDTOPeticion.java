@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import unicauca.taller05.infraestructura.input.validators.CapacidadValida;
+import unicauca.taller05.infraestructura.input.validators.HoraMilitar;
 
 
 import java.time.LocalTime;
@@ -13,6 +15,7 @@ import java.time.LocalTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@CapacidadValida
 public class FranjaHorariaDTOPeticion {
     @NotBlank(message = "{franjaHoraria.dia.vacio}")
     @Pattern(
@@ -22,8 +25,10 @@ public class FranjaHorariaDTOPeticion {
 
     private String dia;
     @NotNull(message = "{franjaHoraria.horaInicio.vacio}")
+    //@HoraMilitar(message = "{franjaHoraria.horaInicio.invalida}")
     private LocalTime horaInicio;
     @NotNull(message = "{franjaHoraria.horaFin.vacio}")
+    //@HoraMilitar(message = "{franjaHoraria.horaInicio.invalida}")
     private LocalTime horaFin;
     @PositiveOrZero(message = "{franjaHoraria.idCurso.positivo}")
     @NotNull(message = "{franjaHoraria.idCurso.vacio}")

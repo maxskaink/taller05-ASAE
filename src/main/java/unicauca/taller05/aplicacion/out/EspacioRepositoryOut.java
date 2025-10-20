@@ -2,6 +2,7 @@ package unicauca.taller05.aplicacion.out;
 
 import unicauca.taller05.dominio.modelos.EspacioFisico;
 import java.util.List;
+import java.util.Optional;
 
 public interface EspacioRepositoryOut {
 
@@ -15,6 +16,13 @@ public interface EspacioRepositoryOut {
      * @return Espacios fisicos que concuerden con lo necesitado.
      */
     List<EspacioFisico> listarEspacioFisicoPorNombreYCapacidad(String nombre, int capacidadMinima);
+
+    /**
+     * Obtiene un espacio fisico por su id
+     * @param id id del espacio fisico a buscar
+     * @return espacio fisico con el id especificado
+     */
+    Optional<EspacioFisico> obtenerEspacioFisicoPorId(Integer id);
 
     /**
      * Actualiza el estado de un espacio fisico a activo o inactivo

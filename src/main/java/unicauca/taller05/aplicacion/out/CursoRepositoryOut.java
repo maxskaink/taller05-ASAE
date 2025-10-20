@@ -3,6 +3,7 @@ package unicauca.taller05.aplicacion.out;
 import unicauca.taller05.dominio.modelos.Curso;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CursoRepositoryOut {
 
@@ -13,6 +14,13 @@ public interface CursoRepositoryOut {
      * @return lista de cursos relacionados con la asignatura buscada
      */
     List<Curso> obtenerCursoPorNombreAsignatura(String nombreAsignatura);
+
+    /**
+     * Obtiene un curso por su id
+     * @param id id del curso a buscar
+     * @return curso con el id especificado
+     */
+    Optional<Curso> obtenerCursoPorId(Integer id);
 
     /**
      * Verifica si un curso existe por su ID

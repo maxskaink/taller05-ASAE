@@ -1,6 +1,7 @@
 package unicauca.taller05.infraestructura.output.persistencia.repositorios;
 
 import java.util.List;
+import java.util.Optional;
 
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -35,6 +36,11 @@ public class CursoRepositoryAdapter implements CursoRepositoryOut {
         }
         return curso;
     }).toList();
+    }
+
+    @Override
+    public Optional<Curso> obtenerCursoPorId(Integer id) {
+        return cursoRepositoryJPA.findById(id).map(entity -> modelMapper.map(entity, Curso.class));
     }
 
     @Override

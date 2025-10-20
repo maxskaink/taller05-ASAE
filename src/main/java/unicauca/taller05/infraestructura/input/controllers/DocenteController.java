@@ -1,5 +1,6 @@
 package unicauca.taller05.infraestructura.input.controllers;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,11 @@ public class DocenteController {
     private final ModelMapper modelMapper;
 
     @PostMapping("")
-    public DocenteDTORespuesta crearDocente(@RequestBody DocenteDTOPeticion docenteDTOPeticion) {
+    public DocenteDTORespuesta crearDocente(
+            @RequestBody
+            @Valid
+            DocenteDTOPeticion docenteDTOPeticion
+    ) {
         Docente docente = modelMapper.map(docenteDTOPeticion, Docente.class);
         Docente docenteCreado = cuDocenteIn.crearDocente(docente);
 

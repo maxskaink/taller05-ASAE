@@ -1,6 +1,7 @@
 // ...existing code...
 package unicauca.taller05.infraestructura.output.controladorExcepciones;
 
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -11,6 +12,7 @@ import jakarta.validation.ConstraintViolationException;
 import lombok.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -31,15 +33,27 @@ import unicauca.taller05.infraestructura.output.controladorExcepciones.excepcion
 @ControllerAdvice
 public class RestApiExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Error> handleGenericException(final HttpServletRequest req,
-                                                        final Exception ex, final Locale locale) {
+                                                        final HttpMessageNotReadableException ex, final Locale locale) {
         final Error error = ErrorUtils
-                .crearError(CodigoError.ERROR_GENERICO.getCodigo(),
-                        CodigoError.ERROR_GENERICO.getLlaveMensaje(),
-                        HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .crearError(CodigoError.PARAMETRO_INVALIDO.getCodigo(),
+                        String.format("%s, %s", CodigoError.PARAMETRO_INVALIDO.getLlaveMensaje(), " formato no valido"),
+                        HttpStatus.BAD_REQUEST.value())
                 .setUrl(req.getRequestURL().toString()).setMetodo(req.getMethod());
-        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DateTimeParseException.class)
+    public ResponseEntity<Error> handleGenericException(final HttpServletRequest req,
+                                                        final DateTimeParseException ex, final Locale locale) {
+        final Error error = ErrorUtils
+                .crearError(CodigoError.PARAMETRO_INVALIDO.getCodigo(),
+                        String.format("%s, %s", CodigoError.PARAMETRO_INVALIDO.getLlaveMensaje(), ex.getMessage()),
+                        HttpStatus.BAD_REQUEST.value())
+                .setUrl(req.getRequestURL().toString()).setMetodo(req.getMethod());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(EntidadYaExisteException.class)
@@ -93,11 +107,17 @@ public class RestApiExceptionHandler {
     @NonNull
     private ResponseEntity<Map<String, String>> getMapResponseEntity(BindException ex) {
         Map<String, String> errores = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String campo = ((FieldError) error).getField();
-            String mensajeDeError = error.getDefaultMessage();
-            errores.put(campo, mensajeDeError);
+
+        ex.getBindingResult().getAllErrors().forEach(error -> {
+            if (error instanceof FieldError fieldError) {
+                // Validación de un campo específico
+                errores.put(fieldError.getField(), fieldError.getDefaultMessage());
+            } else {
+                // Validación a nivel de objeto (por ejemplo, @CapacidadValida)
+                errores.put(error.getObjectName(), error.getDefaultMessage());
+            }
         });
+
         return new ResponseEntity<>(errores, HttpStatus.BAD_REQUEST);
     }
 
@@ -133,5 +153,20 @@ public class RestApiExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     ResponseEntity<String> handleConstraintViolationException(ConstraintViolationException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Error> handleGenericException(final HttpServletRequest req,
+                                                        final Exception ex, final Locale locale) {
+        if (ex instanceof DateTimeParseException) {
+            System.out.println("Problema de parseo de fecha");
+            throw (DateTimeParseException) ex;
+        }
+        final Error error = ErrorUtils
+                .crearError(CodigoError.ERROR_GENERICO.getCodigo(),
+                        CodigoError.ERROR_GENERICO.getLlaveMensaje(),
+                        HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .setUrl(req.getRequestURL().toString()).setMetodo(req.getMethod());
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

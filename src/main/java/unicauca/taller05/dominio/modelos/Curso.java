@@ -20,4 +20,6 @@ public class Curso {
     private List<Docente> docentes = new ArrayList<>();
 
     private List<FranjaHoraria> franjas;
+
+    private Integer capacidad;
 }
