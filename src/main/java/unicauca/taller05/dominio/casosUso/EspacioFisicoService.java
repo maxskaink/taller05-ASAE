@@ -1,7 +1,6 @@
 package unicauca.taller05.dominio.casosUso;
 
 import lombok.AllArgsConstructor;
-import lombok.experimental.var;
 import unicauca.taller05.aplicacion.in.CUEspacioFisicoIn;
 import unicauca.taller05.aplicacion.out.EspacioFormaterOut;
 import unicauca.taller05.aplicacion.out.EspacioRepositoryOut;
@@ -37,7 +36,6 @@ public class EspacioFisicoService implements CUEspacioFisicoIn {
     /**
      * Actualiza el estado de un espacio fisico
      * @param id Id del espacio fisico
-     * @param estado Nuevo estado del espacio fisico
      * @return true si se actualizo el estado, false en caso contrario
      */
     @Override
