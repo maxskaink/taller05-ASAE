@@ -46,15 +46,15 @@ INSERT INTO EspacioFisico (nombre, capacidad, estado) VALUES
 
 -- Insertar cursos
 INSERT INTO Curso (nombre, asignatura_id) VALUES 
-('ASAE - Grupo A', 1);
+('Grupo A', 1);
 INSERT INTO Curso (nombre, asignatura_id) VALUES 
-('ASAE - Grupo B', 1);
+('Grupo B', 1);
 INSERT INTO Curso (nombre, asignatura_id) VALUES 
-('Base de Datos - Grupo 1', 2);
+('Grupo 1', 2);
 INSERT INTO Curso (nombre, asignatura_id) VALUES 
-('Ingeniería de Software - Grupo 1', 3);
+('Grupo 1', 3);
 INSERT INTO Curso (nombre, asignatura_id) VALUES 
-('Programación Web - Grupo 1', 4);
+('Grupo 1', 4);
 
 -- Insertar relaciones curso-docente (tabla intermedia)
 INSERT INTO curso_docente (curso_id, docente_id) VALUES (1, 1);
