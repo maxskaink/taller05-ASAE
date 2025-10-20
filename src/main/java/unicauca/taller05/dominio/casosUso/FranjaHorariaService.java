@@ -2,21 +2,29 @@ package unicauca.taller05.dominio.casosUso;
 
 import lombok.AllArgsConstructor;
 import unicauca.taller05.aplicacion.in.CUFranjaHorariaIn;
+import unicauca.taller05.aplicacion.out.CursoRepositoryOut;
+import unicauca.taller05.aplicacion.out.EspacioRepositoryOut;
 import unicauca.taller05.aplicacion.out.FranjaHorariaFormaterOut;
 import unicauca.taller05.aplicacion.out.FranjaHorariaRepositoryOut;
+import unicauca.taller05.dominio.manejadores.validaciones.ValidarDiaYHorarioValido;
+import unicauca.taller05.dominio.manejadores.validaciones.ValidarDocenteLibre;
+import unicauca.taller05.dominio.manejadores.validaciones.ValidarEspacioFisicoExiste;
+import unicauca.taller05.dominio.manejadores.validaciones.ValidarEspacioLibre;
+import unicauca.taller05.dominio.manejadores.validaciones.ValidarExistenciaCurso;
 import unicauca.taller05.dominio.modelos.FranjaHoraria;
-import unicauca.taller05.infraestructura.input.DTOPeticion.FranjaHorariaDTOPeticion;
 
-import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 
 @AllArgsConstructor
 public class FranjaHorariaService implements CUFranjaHorariaIn {
 
-    private final FranjaHorariaFormaterOut  franjaFormater;
+    private final FranjaHorariaFormaterOut franjaFormater;
     private final FranjaHorariaRepositoryOut franjaRepository;
+    private final CursoRepositoryOut cursoRepository; 
+    private final EspacioRepositoryOut espacioRepository;
     private final ModelMapper modelMapper;
 
     @Override
@@ -41,36 +49,36 @@ public class FranjaHorariaService implements CUFranjaHorariaIn {
     }
 
     @Override
-    public FranjaHoraria crearFranjaHoraria(FranjaHorariaDTOPeticion franjaHorariaACrear) {
+    public FranjaHoraria crearFranjaHoraria(FranjaHoraria franjaHorariaACrear) {
         if (franjaHorariaACrear == null) {
             franjaFormater.retornarErrorParametroInvalido("La franja horaria no puede ser nula");
             return null;
         }
+        System.out.println("DebugSERVICIO: FranjaHoraria completa: " + franjaHorariaACrear);
+        var validarDiaYHorario = new ValidarDiaYHorarioValido(franjaFormater);
+        var validarEspacioExiste = new ValidarEspacioFisicoExiste(franjaFormater, espacioRepository);
+        var validarCursoExiste = new ValidarExistenciaCurso(franjaFormater, cursoRepository);
+        var validarDocenteLibre = new ValidarDocenteLibre(franjaRepository, franjaFormater);
+        var validarEspacioLibre = new ValidarEspacioLibre(franjaRepository, franjaFormater);
 
-        LocalTime inicio = franjaHorariaACrear.getHoraInicio();
-        LocalTime fin = franjaHorariaACrear.getHoraFin();
+        validarDiaYHorario
+            .setSiguiente(validarDocenteLibre)
+            .setSiguiente(validarDiaYHorario)
+            .setSiguiente(validarEspacioLibre)
+            .setSiguiente(validarEspacioExiste)
+            .setSiguiente(validarCursoExiste);
+            
 
-        if (!inicio.isBefore(fin)) {
-            franjaFormater.retornarErrorParametroInvalido("La hora de inicio debe ser anterior a la hora de fin");
-            return null;
+
+        Optional<FranjaHoraria> resultado = validarDiaYHorario.manejar(franjaHorariaACrear);
+
+        if (resultado.isPresent()) {
+            return franjaRepository.crearFranjaHoraria(resultado.get());
         }
 
-        List<FranjaHoraria> existentes = franjaRepository.obtenerFranjasHorariasPorCurso(franjaHorariaACrear.getIdCurso());
-        
-        boolean solapado = existentes.stream().anyMatch(f ->
-            f.getDia().equals(franjaHorariaACrear.getDia()) &&
-            (inicio.isBefore(f.getHoraFin()) && fin.isAfter(f.getHoraInicio()))
-        );
-
-        if (solapado) {
-            franjaFormater.retornarErrorParametroInvalido("La franja horaria se solapa con otra existente en el mismo día");
-            return null;
-        }
-
-        FranjaHoraria franjaHoraria = modelMapper.map(franjaHorariaACrear, FranjaHoraria.class);
-        
-        return franjaRepository.crearFranjaHoraria(franjaHoraria);
+        return null;
     }
+
     @Override
     public List<FranjaHoraria> franjaHorariaPorDocente(Integer idDocente) {
         if(idDocente == null){

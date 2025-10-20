@@ -36,4 +36,10 @@ public class CursoRepositoryAdapter implements CursoRepositoryOut {
         return curso;
     }).toList();
     }
+
+    @Override
+    public boolean existsById(Integer id) {
+        // TODO Auto-generated method stub
+        return cursoRepositoryJPA.existsById(id);
+    }
 }

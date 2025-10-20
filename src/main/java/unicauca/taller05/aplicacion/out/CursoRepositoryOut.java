@@ -14,4 +14,11 @@ public interface CursoRepositoryOut {
      */
     List<Curso> obtenerCursoPorNombreAsignatura(String nombreAsignatura);
 
+    /**
+     * Verifica si un curso existe por su ID
+     * @param id ID del curso a verificar
+     * @return true si el curso existe, false en caso contrario
+     */
+    boolean existsById(Integer id);
+
 }

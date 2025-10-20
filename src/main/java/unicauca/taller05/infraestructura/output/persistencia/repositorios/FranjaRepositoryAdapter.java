@@ -31,9 +31,22 @@ public class FranjaRepositoryAdapter implements FranjaHorariaRepositoryOut {
 
     @Override
     public List<FranjaHoraria> obtenerFranjasHorariasPorCurso(Integer idCurso) {
+        var franjas = franjaHorarioRepositoryJPA.obtenerFranjasPorIdCursoConJoin(idCurso);
 
-        return franjaHorarioRepositoryJPA.findByCursoId(idCurso).stream()
-                .map(entity->modelMapper.map(entity, FranjaHoraria.class))
+        // Log para verificar los datos recuperados
+        System.out.println("Debug: Franjas recuperadas para el curso ID: " + idCurso);
+        franjas.forEach(f -> {
+            System.out.println("Franja ID: " + f.getId());
+            System.out.println("Curso: " + f.getCurso());
+            if (f.getCurso() != null) {
+                System.out.println("Curso Nombre: " + f.getCurso().getNombre());
+                System.out.println("Curso Asignatura: " + f.getCurso().getAsignatura());
+                System.out.println("Curso Docentes: " + f.getCurso().getDocentes());
+            }
+        });
+
+        return franjas.stream()
+                .map(entity -> modelMapper.map(entity, FranjaHoraria.class))
                 .collect(Collectors.toList());
     }
 
@@ -53,17 +66,33 @@ public class FranjaRepositoryAdapter implements FranjaHorariaRepositoryOut {
 
     @Override
     public List<FranjaHoraria> obtenerFranjasOcupadasPorEspacio(DayOfWeek dia, LocalTime horaInicio, LocalTime horaFin, Integer idEspacioFisico) {
-        return List.of();
+    String diaEnEspanol = convertirDiaADiaEnEspanol(dia);
+    return franjaHorarioRepositoryJPA.obtenerFranjasOcupadasPorEspacio(diaEnEspanol, horaInicio, horaFin, idEspacioFisico).stream()
+            .map(entity -> modelMapper.map(entity, FranjaHoraria.class))
+            .collect(Collectors.toList());
     }
-
+    private String convertirDiaADiaEnEspanol(DayOfWeek dia) {
+        return switch (dia) {
+            case MONDAY -> "Lunes";
+            case TUESDAY -> "Martes";
+            case WEDNESDAY -> "Miercoles";
+            case THURSDAY -> "Jueves";
+            case FRIDAY -> "Viernes";
+            case SATURDAY -> "Sabado";
+            default -> throw new IllegalArgumentException("Día inválido: " + dia);
+        };
+    }
     @Override
     public List<FranjaHoraria> obtenerFranjasOcupadasPorDocente(DayOfWeek dia, LocalTime horaInicio, LocalTime horaFin, Integer idDocente) {
-        return List.of();
+        String diaEnEspanol = convertirDiaADiaEnEspanol(dia);
+        return franjaHorarioRepositoryJPA.obtenerFranjasOcupadasPorDocente(diaEnEspanol, horaInicio, horaFin, idDocente).stream()
+                .map(entity -> modelMapper.map(entity, FranjaHoraria.class))
+                .collect(Collectors.toList());
     }
     @Transactional
     @Override
     public FranjaHoraria eliminarFranjaHorariaPorId(Integer cursoId) {
-        List<FranjaHorariaEntity> franjas = franjaHorarioRepositoryJPA.findByCursoId(cursoId);
+        List<FranjaHorariaEntity> franjas = franjaHorarioRepositoryJPA.obtenerFranjasPorIdCursoConJoin(cursoId);
         franjaHorarioRepositoryJPA.eliminarFranjasPorCurso(cursoId);
 
         return franjas.stream()

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import unicauca.taller05.aplicacion.in.CUFranjaHorariaIn;
 import org.modelmapper.ModelMapper;
+import unicauca.taller05.dominio.modelos.FranjaHoraria;
 
 import unicauca.taller05.infraestructura.input.DTOPeticion.FranjaHorariaDTOPeticion;
 import unicauca.taller05.infraestructura.input.DTORespuesta.FranjaHorariaDTORespuesta;
@@ -56,9 +57,8 @@ public class FranjaHorariaController {
 
     @PostMapping()
     public FranjaHorariaDTORespuesta crearFranja(@Valid @RequestBody FranjaHorariaDTOPeticion franjaCrearDTO){
-        // El controlador solo pasa el DTO al servicio
-        var franjaCreada = cuFranjaHorariaIn.crearFranjaHoraria(franjaCrearDTO);
-        
+        FranjaHoraria franjaACrear = modelMapper.map(franjaCrearDTO, FranjaHoraria.class);
+        FranjaHoraria franjaCreada = cuFranjaHorariaIn.crearFranjaHoraria(franjaACrear);
         // Solo convierte la respuesta a DTO
         return modelMapper.map(franjaCreada, FranjaHorariaDTORespuesta.class);
     }

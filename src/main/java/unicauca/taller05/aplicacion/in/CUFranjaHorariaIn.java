@@ -26,7 +26,7 @@ public interface CUFranjaHorariaIn {
      * Punto 6.1 del taller
      * @param franjaHorariaACrear franja horaria a crear
      */
-    FranjaHoraria crearFranjaHoraria(FranjaHorariaDTOPeticion franjaHorariaACrear);
+    FranjaHoraria crearFranjaHoraria(FranjaHoraria franjaHorariaACrear);
 
     /**
      * Lista de las franjas horarias asignadas a un docente

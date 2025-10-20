@@ -36,4 +36,10 @@ public class EspacioRepositoryAdapter implements EspacioRepositoryOut {
     public List<EspacioFisico> listarEspaciosFisicos() {
         return espacioRepositoryJPA.findAll().stream().map(entity -> modelMapper.map(entity, EspacioFisico.class)).toList();
     }
+
+    @Override
+    public boolean existsById(Integer id) {
+        return espacioRepositoryJPA.existsById(id);
+    }
+    
 }

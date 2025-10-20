@@ -32,4 +32,11 @@ public interface EspacioRepositoryOut {
      */
     List<EspacioFisico> listarEspaciosFisicos();
 
+    /**
+     * Verifica si un espacio fisico existe por su ID
+     * @param id ID del espacio fisico a verificar
+     * @return true si el espacio fisico existe, false en caso contrario
+     */
+    boolean existsById(Integer id);
+
 }

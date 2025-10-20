@@ -12,7 +12,6 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FranjaHorariaDTORespuesta {
-    private Integer id;
     private String dia;
     private LocalTime horaInicio;
     private LocalTime horaFin;
